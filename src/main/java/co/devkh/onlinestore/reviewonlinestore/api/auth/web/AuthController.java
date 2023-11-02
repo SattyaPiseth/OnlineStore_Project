@@ -17,6 +17,12 @@ public class AuthController {
     private final AuthService authService;
     @Value("${app.base-uri}")
     private String appBaseUri;
+
+    @PostMapping("/login")
+    public AuthDto login(@Valid @RequestBody LoginDto loginDto){
+
+        return authService.login(loginDto);
+    }
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/register")
     public Map<String,String> register(@RequestBody @Valid  RegisterDto registerDto) throws MessagingException {
