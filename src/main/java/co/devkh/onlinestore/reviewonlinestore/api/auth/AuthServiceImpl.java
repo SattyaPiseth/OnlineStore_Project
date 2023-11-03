@@ -1,9 +1,6 @@
 package co.devkh.onlinestore.reviewonlinestore.api.auth;
 
-import co.devkh.onlinestore.reviewonlinestore.api.auth.web.AuthDto;
-import co.devkh.onlinestore.reviewonlinestore.api.auth.web.LoginDto;
-import co.devkh.onlinestore.reviewonlinestore.api.auth.web.RegisterDto;
-import co.devkh.onlinestore.reviewonlinestore.api.auth.web.VerifyDto;
+import co.devkh.onlinestore.reviewonlinestore.api.auth.web.*;
 import co.devkh.onlinestore.reviewonlinestore.api.mail.Mail;
 import co.devkh.onlinestore.reviewonlinestore.api.mail.MailService;
 import co.devkh.onlinestore.reviewonlinestore.api.user.User;
@@ -14,15 +11,20 @@ import com.nimbusds.jwt.JWTClaimsSet;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
+import org.springframework.security.oauth2.server.resource.authentication.BearerTokenAuthenticationToken;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationProvider;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -41,12 +43,64 @@ public class AuthServiceImpl implements AuthService {
     private final AuthMapper authMapper;
     private final MailService mailService;
 
+    private final JwtAuthenticationProvider jwtAuthenticationProvider;
     private final DaoAuthenticationProvider daoAuthenticationProvider;
     private final JwtEncoder jwtEncoder;
 
+    private JwtEncoder jwtRefreshTokenEncoder;
+    @Autowired
+    public void setJwtRefreshTokenEncoder(@Qualifier("jwtRefreshTokenEncoder") JwtEncoder jwtRefreshTokenEncoder) {
+        this.jwtRefreshTokenEncoder = jwtRefreshTokenEncoder;
+    }
 
     @Value("${spring.mail.username}")
     private String adminMail;
+
+    @Override
+    public AuthDto refreshToken(RefreshTokenDto refreshTokenDto) {
+  // If we have only token for authentication we need to use class BearerTokenAuthenticationToken for authenticated;
+     Authentication auth = new BearerTokenAuthenticationToken(refreshTokenDto.refreshToken());
+     auth = jwtAuthenticationProvider.authenticate(auth);
+     // this we have only token for authentication. if authenticated passed. auth have user details.
+        // but we need downcast to return type jwt and access to user details
+        Jwt jwt = (Jwt) auth.getPrincipal();
+        log.info("Name: {}",jwt.getId());
+        log.info("Subject: {}",jwt.getSubject());
+
+        Instant now = Instant.now();
+//        String scope = auth.getAuthorities().stream()
+//                .map(grantedAuthority -> grantedAuthority.getAuthority())
+//                .collect(Collectors.joining(" "));
+
+        JwtClaimsSet jwtClaimsSet = JwtClaimsSet.builder()
+                .id(auth.getName())
+                .issuer("Public")
+                .issuedAt(now)
+                .expiresAt(now.plus(1, ChronoUnit.SECONDS))
+                .subject("Access Token")
+                .audience(List.of("Public Client"))
+                .claim("scope",jwt.getClaimAsString("scope"))
+                .build();
+
+        JwtClaimsSet jwtRefreshTokenClaimsSet = JwtClaimsSet.builder()
+                .id(auth.getName())
+                .issuer("Public")
+                .issuedAt(now)
+                .expiresAt(now.plus(24, ChronoUnit.HOURS))
+                .subject("Refresh Token")
+                .audience(List.of("Public Client"))
+                .claim("scope",jwt.getClaimAsString("scope"))
+                .build();
+
+        String accessToken = jwtEncoder.encode(JwtEncoderParameters.from(jwtClaimsSet)).getTokenValue();
+        String refreshToken = jwtRefreshTokenEncoder.encode(JwtEncoderParameters.from(jwtRefreshTokenClaimsSet)).getTokenValue();
+
+        return AuthDto.builder()
+                .type("Bearer")
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
+    }
 
     @Transactional
     @Override
@@ -86,8 +140,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthDto login(LoginDto loginDto) {
-
+    // If we have username and password we have to use class UsernamePasswordAuthenticationToken for authenticate;
     Authentication auth =  new UsernamePasswordAuthenticationToken(loginDto.username(),loginDto.password());
+    // if authenticate passed. auth have UserDetails about credentials, else auth = null
     auth = daoAuthenticationProvider.authenticate(auth);
 
     log.info("AUTH = {}",auth.getName());
@@ -102,17 +157,30 @@ public class AuthServiceImpl implements AuthService {
                 .id(auth.getName())
                 .issuer("Public")
                 .issuedAt(now)
-                .expiresAt(now.plus(1, ChronoUnit.HOURS))
+                .expiresAt(now.plus(1, ChronoUnit.SECONDS))
                 .subject("Access Token")
                 .audience(List.of("Public Client"))
                 .claim("scope",scope)
                 .build();
 
+        JwtClaimsSet jwtRefreshTokenClaimsSet = JwtClaimsSet.builder()
+                .id(auth.getName())
+                .issuer("Public")
+                .issuedAt(now)
+                .expiresAt(now.plus(24, ChronoUnit.HOURS))
+                .subject("Refresh Token")
+                .audience(List.of("Public Client"))
+                .claim("scope",scope)
+                .build();
+
         String accessToken = jwtEncoder.encode(JwtEncoderParameters.from(jwtClaimsSet)).getTokenValue();
+        String refreshToken = jwtRefreshTokenEncoder.encode(JwtEncoderParameters.from(jwtRefreshTokenClaimsSet)).getTokenValue();
+
 
         return AuthDto.builder()
                 .type("Bearer")
                 .accessToken(accessToken)
+                .refreshToken(refreshToken)
                 .build();
     }
 }
