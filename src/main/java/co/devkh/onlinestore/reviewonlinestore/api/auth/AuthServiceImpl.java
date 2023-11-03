@@ -72,28 +72,27 @@ public class AuthServiceImpl implements AuthService {
 //                .map(grantedAuthority -> grantedAuthority.getAuthority())
 //                .collect(Collectors.joining(" "));
 
-        JwtClaimsSet jwtClaimsSet = JwtClaimsSet.builder()
-                .id(auth.getName())
-                .issuer("Public")
-                .issuedAt(now)
-                .expiresAt(now.plus(1, ChronoUnit.SECONDS))
-                .subject("Access Token")
-                .audience(List.of("Public Client"))
-                .claim("scope",jwt.getClaimAsString("scope"))
-                .build();
+     JwtClaimsSet jwtClaimsSet = JwtClaimsSet.builder()
+             .id(jwt.getId())
+             .issuer("public")
+             .issuedAt(now)
+             .expiresAt(now.plus(1,ChronoUnit.SECONDS))
+             .subject("Access Token")
+             .audience(List.of("Public Client"))
+             .claim("scope",jwt.getClaimAsString("scope"))
+             .build();
+     JwtClaimsSet jwtRefreshTokenClaimsSet = JwtClaimsSet.builder()
+             .id(jwt.getId())
+             .issuer("public")
+             .issuedAt(now)
+             .expiresAt(now.plus(24,ChronoUnit.HOURS))
+             .subject("Refresh Token")
+             .audience(List.of("Public Client"))
+             .claim("scope",jwt.getClaimAsString("scope"))
+             .build();
 
-        JwtClaimsSet jwtRefreshTokenClaimsSet = JwtClaimsSet.builder()
-                .id(auth.getName())
-                .issuer("Public")
-                .issuedAt(now)
-                .expiresAt(now.plus(24, ChronoUnit.HOURS))
-                .subject("Refresh Token")
-                .audience(List.of("Public Client"))
-                .claim("scope",jwt.getClaimAsString("scope"))
-                .build();
-
-        String accessToken = jwtEncoder.encode(JwtEncoderParameters.from(jwtClaimsSet)).getTokenValue();
-        String refreshToken = jwtRefreshTokenEncoder.encode(JwtEncoderParameters.from(jwtRefreshTokenClaimsSet)).getTokenValue();
+     String accessToken = jwtEncoder.encode(JwtEncoderParameters.from(jwtClaimsSet)).getTokenValue();
+     String refreshToken = jwtRefreshTokenEncoder.encode(JwtEncoderParameters.from(jwtRefreshTokenClaimsSet)).getTokenValue();
 
         return AuthDto.builder()
                 .type("Bearer")
