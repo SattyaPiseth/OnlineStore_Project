@@ -1,5 +1,6 @@
 package co.devkh.onlinestore.reviewonlinestore.security;
 
+import co.devkh.onlinestore.reviewonlinestore.util.KeyUtil;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.KeySourceException;
 import com.nimbusds.jose.jwk.JWK;
@@ -45,6 +46,7 @@ public class SecurityConfig {
 
     private final PasswordEncoder passwordEncoder;
     private final UserDetailsService userDetailsService;
+    private final KeyUtil keyUtil;
 
     //TODO    We have two methods for customized create user for Spring Security.
 //      1. In Memory User : user is created if application started. and application stop all user we created is deleted.
@@ -98,8 +100,7 @@ public class SecurityConfig {
     JwtAuthenticationProvider jwtAuthenticationProvider() throws JOSEException {
         JwtAuthenticationProvider provider =
                 new JwtAuthenticationProvider(
-                        jwtRefreshTokenDecoder(
-                                refreshTokenRsaKey(refreshTokenKeyPair())));
+                        jwtRefreshTokenDecoder());
         return provider;
     }
 
@@ -167,34 +168,20 @@ public class SecurityConfig {
     // TODO Purpose when we configured already we need to return build this configured.
         return httpSecurity.build();
     }
+
     @Bean
     @Primary
-    public KeyPair keyPair() {
-        try {
-            var keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-            keyPairGenerator.initialize(2048);
-            return keyPairGenerator.generateKeyPair();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
+    JwtDecoder jwtDecoder() throws JOSEException {
+        return NimbusJwtDecoder.withPublicKey(keyUtil.getAccessTokenPublicKey()).build(); //rsaKey.toRSAPublicKey()
     }
     @Bean
     @Primary
-    public RSAKey rsaKey(KeyPair keyPair) {
-        return new RSAKey.Builder((RSAPublicKey) keyPair.getPublic())
-                .privateKey(keyPair.getPrivate())
+    public JWKSource<SecurityContext> jwkSource() {
+        JWK jwk = new RSAKey.Builder(keyUtil.getAccessTokenPublicKey())
+                .privateKey(keyUtil.getAccessTokenPrivateKey())
                 .keyID(UUID.randomUUID().toString())
                 .build();
-    }
-    @Bean
-    @Primary
-    JwtDecoder jwtDecoder(RSAKey rsaKey) throws JOSEException {
-        return NimbusJwtDecoder.withPublicKey(rsaKey.toRSAPublicKey()).build();
-    }
-    @Bean
-    @Primary
-    public JWKSource<SecurityContext> jwkSource(RSAKey rsaKey) {
-        var jwkSet = new JWKSet(rsaKey);
+        var jwkSet = new JWKSet(jwk); // rsaKey
         return new JWKSource<SecurityContext>() {
             @Override
             public List<JWK> get(JWKSelector jwkSelector, SecurityContext context) throws KeySourceException {
@@ -210,34 +197,22 @@ public class SecurityConfig {
 
 
     /*=> Start Implemented Refresh Token <=*/
-    @Bean("refreshTokenKeyPair")
-    public KeyPair refreshTokenKeyPair() {
-        try {
-            var keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-            keyPairGenerator.initialize(2048);
-            return keyPairGenerator.generateKeyPair();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    @Bean("refreshTokenRsaKey")
-    public RSAKey refreshTokenRsaKey(@Qualifier("refreshTokenKeyPair") KeyPair keyPair) {
-        return new RSAKey.Builder((RSAPublicKey) keyPair.getPublic())
-                .privateKey(keyPair.getPrivate())
-                .keyID(UUID.randomUUID().toString())
-                .build();
-    }
+
     @Bean("jwtRefreshTokenDecoder")
-    JwtDecoder jwtRefreshTokenDecoder(@Qualifier("refreshTokenRsaKey") RSAKey rsaKey) throws JOSEException {
-        return NimbusJwtDecoder.withPublicKey(rsaKey.toRSAPublicKey()).build();
+    JwtDecoder jwtRefreshTokenDecoder() throws JOSEException {
+        return NimbusJwtDecoder.withPublicKey(keyUtil.getRefreshTokenPublicKey()).build(); // rsaKey.toRSAPublicKey()
     }
     @Bean("jwtRefreshTokenEncoder")
     JwtEncoder jwtRefreshTokenEncoder(@Qualifier("refreshTokenJwkSource") JWKSource<SecurityContext> jwkSource) {
         return new NimbusJwtEncoder(jwkSource);
     }
     @Bean("refreshTokenJwkSource")
-    public JWKSource<SecurityContext> refreshTokenJwkSource(@Qualifier("refreshTokenRsaKey") RSAKey rsaKey) {
-        var jwkSet = new JWKSet(rsaKey);
+    public JWKSource<SecurityContext> refreshTokenJwkSource() {
+        JWK jwk = new RSAKey.Builder(keyUtil.getRefreshTokenPublicKey())
+                .privateKey(keyUtil.getRefreshTokenPrivateKey())
+                .keyID(UUID.randomUUID().toString())
+                .build();
+        var jwkSet = new JWKSet(jwk); //rsaKey
         return new JWKSource<SecurityContext>() {
             @Override
             public List<JWK> get(JWKSelector jwkSelector, SecurityContext context) throws KeySourceException {
