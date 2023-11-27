@@ -130,7 +130,7 @@ public class SecurityConfig {
 
         // TODO: What you want to customize
         httpSecurity.authorizeHttpRequests(auth-> auth
-                .requestMatchers("/api/v1/auth/**","/api/v1/files/**").permitAll()
+                .requestMatchers("/api/v1/auth/**","/api/v1/files/**","/file/**","/auth/**","index.html").permitAll()
                 .requestMatchers(HttpMethod.GET,
                         "/api/v1/categories/**",
                         "/api/v1/products/**").hasAuthority("SCOPE_product:read")

@@ -16,4 +16,5 @@ public interface AuthRepository extends JpaRepository<User,Long> {
                             @Param("verifiedCode") String verifiedCode);
 
     Optional<User> findByEmailAndVerifiedCodeAndIsDeletedFalse(String email,String verifiedCode);
+
 }
