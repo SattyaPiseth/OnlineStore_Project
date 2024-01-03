@@ -14,7 +14,12 @@ public interface AuthRepository extends JpaRepository<User,Long> {
     @Query("UPDATE User AS u SET u.verifiedCode = :verifiedCode WHERE u.username = :username")
     void updateVerifiedCode(@Param("username") String username,
                             @Param("verifiedCode") String verifiedCode);
-
+    
     Optional<User> findByEmailAndVerifiedCodeAndIsDeletedFalse(String email,String verifiedCode);
 
+    @Modifying
+    @Query("UPDATE User AS u SET u.verifiedToken = :verifiedToken WHERE u.username = :username")
+    void updateIsVerifiedToken(@Param("username") String username,@Param("verifiedToken") String verifiedToken);
+
+    Optional<User> findByVerifiedTokenAndIsDeletedFalse(String verifiedToken);
 }

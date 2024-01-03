@@ -33,6 +33,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,6 +57,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Value("${spring.mail.username}")
     private String adminMail;
+
+    @Value("${app.base-uri}")
+    private String app_base_uri;
 
     @Override
     public AuthDto refreshToken(RefreshTokenDto refreshTokenDto) {
@@ -92,14 +96,16 @@ public class AuthServiceImpl implements AuthService {
 
     @Transactional
     @Override
-    public void register(RegisterDto registerDto) throws MessagingException {
+    public String register(RegisterDto registerDto) throws MessagingException {
         NewUserDto newUserDto = authMapper.mapRegisterDtoToNewUserDto(registerDto);
         userService.createNewUser(newUserDto);
 
         String verifiedCode = RandomUtil.generateCode();
+        String verifiedToken = UUID.randomUUID().toString();
 
         // Store verifiedCode in database
         authRepository.updateVerifiedCode(registerDto.username(),verifiedCode);
+        authRepository.updateIsVerifiedToken(registerDto.username(),verifiedToken);
 
         // Send verifiedCode via email
         Mail<String> verifiedMail = new Mail<>();
@@ -110,6 +116,25 @@ public class AuthServiceImpl implements AuthService {
         verifiedMail.setMetaData(verifiedCode);
 
         mailService.sendMail(verifiedMail);
+        log.info("Verify Mail : {}",verifiedMail);
+
+    /*  #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#  */
+        // Send verifiedToken via email
+     String verificationLink = app_base_uri+"api/v1/"+"auth/verify?token="+verifiedToken;
+
+       log.info("Verification Link : {}",verificationLink);
+
+        Mail<String> verifiedTokenMail = new Mail<>();
+        verifiedTokenMail.setSubject("Email Verification");
+        verifiedTokenMail.setSender(adminMail);
+        verifiedTokenMail.setReceiver(newUserDto.email());
+        verifiedTokenMail.setTemplate("auth/verify-token-mail");
+        verifiedTokenMail.setMetaData(verificationLink);
+
+        mailService.sendMail(verifiedTokenMail);
+        log.info("Verify Token Mail : {}",verifiedTokenMail);
+
+        return verificationLink;
     }
 
     @Transactional
@@ -123,6 +148,7 @@ public class AuthServiceImpl implements AuthService {
 
         verifiedUser.setIsVerified(true);
         verifiedUser.setVerifiedCode(null);
+        verifiedUser.setVerifiedToken(null);
 
         authRepository.save(verifiedUser);
     }
@@ -153,6 +179,22 @@ public class AuthServiceImpl implements AuthService {
                         .scope(scope)
                         .build()))
                 .build();
+    }
+
+    @Override
+    public boolean verifyUser(String token) {
+        User verifiedUser = authRepository.findByVerifiedTokenAndIsDeletedFalse(token)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED,
+                        "Verify email has been failed..!"));
+        if (!verifiedUser.getIsVerified()){
+            verifiedUser.setIsVerified(true);
+            verifiedUser.setVerifiedCode(null);
+            verifiedUser.setVerifiedToken(null);
+
+            authRepository.save(verifiedUser);
+            return true;
+        }
+        return false;
     }
 
     private String generateAccessToken(GenerateTokenDto generateTokenDto){

@@ -1,6 +1,8 @@
 package co.devkh.onlinestore.reviewonlinestore.api.auth.web;
 
+import co.devkh.onlinestore.reviewonlinestore.api.auth.AuthRepository;
 import co.devkh.onlinestore.reviewonlinestore.api.auth.AuthService;
+import co.devkh.onlinestore.reviewonlinestore.api.user.User;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -30,10 +32,11 @@ public class AuthController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/register")
     public Map<String,String> register(@RequestBody @Valid  RegisterDto registerDto) throws MessagingException {
-        authService.register(registerDto);
+      String token =  authService.register(registerDto);
 
         return Map.of("message","Please check email and verify..!",
-                "verifyUri",appBaseUri+"auth/verify?email="+registerDto.email());
+                "verify via 6 digits",appBaseUri+"auth/verify?email="+registerDto.email(),
+                "verify via Verify Email Address",token);
     }
 
     @PostMapping("/verify")
@@ -43,4 +46,9 @@ public class AuthController {
         return Map.of("message","Congratulation! Email has been verified..!");
     }
 
+    @GetMapping("/verify")
+    public Map<String,String> verify(@RequestParam("token") String token){
+        authService.verifyUser(token);
+        return Map.of("message","Congratulation! Email has been verified..!");
+    }
 }

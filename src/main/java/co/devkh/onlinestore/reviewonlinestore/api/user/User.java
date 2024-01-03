@@ -33,6 +33,7 @@ public class User {
     private String nickName;
     @Column(length = 10)
     private String verifiedCode;
+    private String verifiedToken;
     private Boolean isVerified;
     private Boolean isDeleted;
 

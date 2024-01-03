@@ -4,9 +4,11 @@ import co.devkh.onlinestore.reviewonlinestore.api.auth.web.*;
 import co.devkh.onlinestore.reviewonlinestore.api.user.User;
 import jakarta.mail.MessagingException;
 
+import java.util.UUID;
+
 public interface AuthService {
     AuthDto refreshToken(RefreshTokenDto refreshTokenDto);
-    void register(RegisterDto registerDto) throws MessagingException;
+    String register(RegisterDto registerDto) throws MessagingException;
 
 
     /**
@@ -26,4 +28,6 @@ public interface AuthService {
      * @param loginDto of Request data from client
      */
     AuthDto login(LoginDto loginDto);
+
+    boolean verifyUser(String token);
 }
