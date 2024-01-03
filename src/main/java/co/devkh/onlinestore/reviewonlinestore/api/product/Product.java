@@ -1,9 +1,17 @@
 package co.devkh.onlinestore.reviewonlinestore.api.product;
 
+import co.devkh.onlinestore.reviewonlinestore.api.brand.Brand;
+import co.devkh.onlinestore.reviewonlinestore.api.cart.Cart;
+import co.devkh.onlinestore.reviewonlinestore.api.inventory.Inventory;
+import co.devkh.onlinestore.reviewonlinestore.api.order.OrderItems;
+import co.devkh.onlinestore.reviewonlinestore.api.shipment.ShipmentDetail;
+import co.devkh.onlinestore.reviewonlinestore.api.supplier.Supplier;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,9 +29,31 @@ public class Product {
     private String name;
     @Column(columnDefinition = "TEXT")
     private String description;
+    @Column(name = "image_url")
     private String image;
 
     @ManyToOne
     @JoinColumn(name = "cate_id")
     private Category category;
+
+
+    @ManyToOne
+    @JoinColumn(name = "brand_id")
+    private Brand brand;
+
+    @ManyToOne
+    @JoinColumn(name = "supplier_id")
+    private Supplier supplier;
+
+    @OneToMany(mappedBy = "product")
+    private List<Inventory> inventories;
+
+    @OneToMany(mappedBy = "product")
+    private List<Cart> carts;
+
+    @OneToMany(mappedBy = "product")
+    private List<OrderItems> orderItems;
+
+    @OneToMany(mappedBy = "product")
+    private List<ShipmentDetail> shipmentDetails;
 }

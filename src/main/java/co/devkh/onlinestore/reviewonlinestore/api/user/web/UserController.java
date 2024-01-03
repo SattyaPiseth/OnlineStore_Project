@@ -54,4 +54,5 @@ public class UserController {
                                       @RequestBody IsDeletedDto isDeletedDto){
         userService.updateIsDeletedByUuid(uuid,isDeletedDto.isDeleted());
     }
+
 }

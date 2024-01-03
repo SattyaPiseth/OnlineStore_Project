@@ -55,4 +55,5 @@ public interface UserService {
      */
     // Update status : 'is_deleted' by UUID
     void updateIsDeletedByUuid(String uuid,Boolean isDeleted);
+
 }

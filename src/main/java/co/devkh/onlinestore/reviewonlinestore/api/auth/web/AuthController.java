@@ -42,4 +42,5 @@ public class AuthController {
 
         return Map.of("message","Congratulation! Email has been verified..!");
     }
+
 }

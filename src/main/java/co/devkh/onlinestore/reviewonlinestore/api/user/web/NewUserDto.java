@@ -19,4 +19,5 @@ public record NewUserDto(@NotBlank
                          String nickName,
                          @Size(min = 1)
                          Set<@Positive Integer> roleIds) {
+
 }

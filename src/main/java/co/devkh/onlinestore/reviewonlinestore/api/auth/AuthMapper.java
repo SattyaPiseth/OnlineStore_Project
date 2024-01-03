@@ -8,4 +8,5 @@ import org.mapstruct.Mapper;
 public interface AuthMapper {
 
     NewUserDto mapRegisterDtoToNewUserDto(RegisterDto registerDto);
+
 }

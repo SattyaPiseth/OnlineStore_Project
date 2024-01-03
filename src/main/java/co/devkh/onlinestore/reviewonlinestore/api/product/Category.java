@@ -1,5 +1,7 @@
 package co.devkh.onlinestore.reviewonlinestore.api.product;
 
+import co.devkh.onlinestore.reviewonlinestore.api.brand.Brand;
+import co.devkh.onlinestore.reviewonlinestore.api.supplier.Supplier;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,5 +22,15 @@ public class Category {
     private String description;
 
     @OneToMany(mappedBy = "category")
-    private List<Prodct> products;
+    private List<Product> products;
+
+    @ManyToMany(mappedBy = "categories")
+    private List<Supplier> suppliers;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(joinColumns =
+        @JoinColumn(name = "cate_id",referencedColumnName = "id"),
+            inverseJoinColumns =
+                @JoinColumn(name = "brand_id",referencedColumnName = "id"))
+    private List<Brand> brands;
 }

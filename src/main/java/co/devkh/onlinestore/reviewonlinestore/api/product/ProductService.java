@@ -3,6 +3,8 @@ package co.devkh.onlinestore.reviewonlinestore.api.product;
 import co.devkh.onlinestore.reviewonlinestore.api.product.web.UpdateProductDto;
 import co.devkh.onlinestore.reviewonlinestore.api.product.web.CreateProductDto;
 import co.devkh.onlinestore.reviewonlinestore.api.product.web.ProductDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -40,4 +42,12 @@ public interface ProductService {
      * @return ProductDto
      */
     ProductDto findByUuid(String uuid);
+
+    /**
+     *
+     * @param searchTerm The search term to filter items.
+     * @return  A Page object containing the filtered and paginated items.
+     * Exception (if applicable) Specify any potential exceptions.
+     */
+    List<ProductDto> searchProducts(String searchTerm);
 }

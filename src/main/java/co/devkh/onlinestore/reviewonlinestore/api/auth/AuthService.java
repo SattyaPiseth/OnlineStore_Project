@@ -1,11 +1,18 @@
 package co.devkh.onlinestore.reviewonlinestore.api.auth;
 
 import co.devkh.onlinestore.reviewonlinestore.api.auth.web.*;
+import co.devkh.onlinestore.reviewonlinestore.api.user.User;
 import jakarta.mail.MessagingException;
 
 public interface AuthService {
     AuthDto refreshToken(RefreshTokenDto refreshTokenDto);
     void register(RegisterDto registerDto) throws MessagingException;
+
+
+    /**
+     * verify by generate code 6 digits
+     * @param verifyDto of Request data from client
+     */
     void verify(VerifyDto verifyDto);
 
     /**

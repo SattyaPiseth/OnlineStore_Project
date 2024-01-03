@@ -5,6 +5,8 @@ import co.devkh.onlinestore.reviewonlinestore.api.product.web.CreateProductDto;
 import co.devkh.onlinestore.reviewonlinestore.api.product.web.ProductDto;
 import co.devkh.onlinestore.reviewonlinestore.util.RandomUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +27,7 @@ public class ProductServiceImpl implements ProductService {
         product.setUuid(UUID.randomUUID().toString());
         product.setCode("PRO-"+ RandomUtil.generateCode());
         productRepository.save(product);
+
     }
     @Transactional
     @Override
@@ -73,4 +76,14 @@ public class ProductServiceImpl implements ProductService {
        return productMapper.toProductDto(productRepository.findByUuid(uuid).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                String.format("Product UUID = %s doesn't exist in db!",uuid))));
     }
+
+    @Override
+    public List<ProductDto> searchProducts(String searchTerm) {
+        if (!searchTerm.isEmpty()){
+            return productMapper.toProductDtoList(productRepository.findByNameContainingIgnoreCase(searchTerm));
+        }else {
+            return productMapper.toProductDtoList(productRepository.findAll());
+        }
+    }
+
 }

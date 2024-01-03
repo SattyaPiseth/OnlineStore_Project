@@ -25,4 +25,32 @@ public interface CategoryService {
      * @return CategoryDto
      */
     CategoryDto findByName(String name);
+
+    /**
+     * This method is used to delete category from database by uuid
+     * @param Id is identifier of category
+     *
+     * @return CategoryDto
+     */
+    CategoryDto findById(Integer Id);
+
+
+    /**
+     * This method is used to delete category from database by uuid
+     * @param name is identifier name of category
+     */
+    void deleteByName(String name);
+
+    /**
+     * This method is used to delete category from database by uuid
+     * @param Id is identifier of category
+     */
+    void deleteById(Integer Id);
+
+    /**
+     * This method is used to update category from database by uuid
+     * @param id is identifier of category
+     * @param updateCategoryDto is the request data from client
+     */
+    void updateById(Integer id,CategoryDto updateCategoryDto);
 }

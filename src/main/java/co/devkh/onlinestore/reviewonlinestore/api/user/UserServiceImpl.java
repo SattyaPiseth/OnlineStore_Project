@@ -116,4 +116,5 @@ public class UserServiceImpl implements UserService{
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                 String.format("User UUID = %s doesn't exist in db!",uuid));
     }
+
 }

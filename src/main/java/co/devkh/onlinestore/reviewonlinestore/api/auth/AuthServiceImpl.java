@@ -76,7 +76,7 @@ public class AuthServiceImpl implements AuthService {
                 .type("Bearer")
                 .accessToken(generateAccessToken(GenerateTokenDto.builder()
                         .auth(jwt.getId())
-                        .expiration(Instant.now().plus(1,ChronoUnit.SECONDS))
+                        .expiration(Instant.now().plus(1,ChronoUnit.HOURS))
                         .scope(jwt.getClaimAsString("scope"))
                         .build()))
                 .refreshToken(checkDurationRefreshToken(GenerateTokenDto.builder()
@@ -111,6 +111,7 @@ public class AuthServiceImpl implements AuthService {
 
         mailService.sendMail(verifiedMail);
     }
+
     @Transactional
     @Override
     public void verify(VerifyDto verifyDto) {
@@ -143,7 +144,7 @@ public class AuthServiceImpl implements AuthService {
                 .type("Bearer")
                 .accessToken(generateAccessToken(GenerateTokenDto.builder()
                         .auth(auth.getName())
-                        .expiration(Instant.now().plus(1,ChronoUnit.SECONDS))
+                        .expiration(Instant.now().plus(1,ChronoUnit.HOURS))
                         .scope(scope)
                         .build()))
                 .refreshToken(generateRefreshToken(GenerateTokenDto.builder()
@@ -153,6 +154,7 @@ public class AuthServiceImpl implements AuthService {
                         .build()))
                 .build();
     }
+
     private String generateAccessToken(GenerateTokenDto generateTokenDto){
         JwtClaimsSet jwtClaimsSet = JwtClaimsSet.builder()
                 .id(generateTokenDto.auth())

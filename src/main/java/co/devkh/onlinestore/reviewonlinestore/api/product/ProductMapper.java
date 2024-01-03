@@ -4,6 +4,7 @@ import co.devkh.onlinestore.reviewonlinestore.api.product.web.CreateProductDto;
 import co.devkh.onlinestore.reviewonlinestore.api.product.web.ProductDto;
 import co.devkh.onlinestore.reviewonlinestore.api.product.web.UpdateProductDto;
 import org.mapstruct.*;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 

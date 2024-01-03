@@ -1,5 +1,9 @@
 package co.devkh.onlinestore.reviewonlinestore.api.user;
 
+import co.devkh.onlinestore.reviewonlinestore.api.address.Address;
+import co.devkh.onlinestore.reviewonlinestore.api.cart.Cart;
+import co.devkh.onlinestore.reviewonlinestore.api.order.Order;
+import co.devkh.onlinestore.reviewonlinestore.api.shipment.Shipment;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -36,8 +40,18 @@ public class User {
     @JoinTable(joinColumns =
         @JoinColumn(name = "user_id",referencedColumnName = "id"),
             inverseJoinColumns =
-                    @JoinColumn(name = "role_id",referencedColumnName = "id")
-    )
+                    @JoinColumn(name = "role_id",referencedColumnName = "id"))
     private Set<Role> roles;
 
+    @OneToMany(mappedBy = "user")
+    private List<Address> addresses;
+
+    @OneToMany(mappedBy = "user")
+    private List<Shipment> shipments;
+
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders;
+
+    @OneToMany(mappedBy = "user")
+    private List<Cart> carts;
 }
