@@ -1,10 +1,7 @@
 package co.devkh.onlinestore.reviewonlinestore.api.auth;
 
 import co.devkh.onlinestore.reviewonlinestore.api.auth.web.*;
-import co.devkh.onlinestore.reviewonlinestore.api.user.User;
 import jakarta.mail.MessagingException;
-
-import java.util.UUID;
 
 public interface AuthService {
     AuthDto refreshToken(RefreshTokenDto refreshTokenDto);
@@ -29,5 +26,12 @@ public interface AuthService {
      */
     AuthDto login(LoginDto loginDto);
 
-    boolean verifyUser(String token);
+    void verifyUser(String token);
+
+    void forgotPassword(ForgotPasswordDto forgotPasswordDto) throws MessagingException;
+
+    void resetPassword(ResetPasswordDto resetPasswordDto);
+
+    boolean verifyResetToken(String token);
+
 }

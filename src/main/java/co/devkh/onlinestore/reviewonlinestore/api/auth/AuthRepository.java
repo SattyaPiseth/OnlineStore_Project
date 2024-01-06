@@ -22,4 +22,9 @@ public interface AuthRepository extends JpaRepository<User,Long> {
     void updateIsVerifiedToken(@Param("username") String username,@Param("verifiedToken") String verifiedToken);
 
     Optional<User> findByVerifiedTokenAndIsDeletedFalse(String verifiedToken);
+
+    Optional<User> findByEmailAndIsDeletedFalse(String email);
+
+    boolean existsByVerifiedTokenAndIsDeletedFalse(String token);
+
 }

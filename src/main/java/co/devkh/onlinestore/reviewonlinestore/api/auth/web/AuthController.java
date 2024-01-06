@@ -8,7 +8,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Map;
 
@@ -40,9 +42,9 @@ public class AuthController {
     }
 
     @PostMapping("/verify")
+    @ResponseStatus(HttpStatus.OK)
     public Map<String,String> verify(@RequestBody @Valid VerifyDto verifyDto){
         authService.verify(verifyDto);
-
         return Map.of("message","Congratulation! Email has been verified..!");
     }
 
@@ -51,4 +53,36 @@ public class AuthController {
         authService.verifyUser(token);
         return Map.of("message","Congratulation! Email has been verified..!");
     }
+
+    @PostMapping("/forgot-password")
+    public Map<String,String> forgotPassword(@RequestBody @Valid ForgotPasswordDto forgotPasswordDto) throws MessagingException {
+        authService.forgotPassword(forgotPasswordDto);
+        return Map.of("message","We have sent a reset password link to your email");
+    }
+
+    @GetMapping("/reset-password")
+    public Map<String,String> verifyResetToken(@RequestParam("token") String token){
+        // Validate token and handle errors
+        boolean isValidToken = authService.verifyResetToken(token);
+        if (!isValidToken) {
+            return Map.of("message","Invalid password reset token");
+        }
+        return Map.of("message","Token is valid",
+                "reset_token",token);
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(
+            @RequestParam("token") String token,
+            @RequestBody @Valid ResetPasswordDto resetPasswordDto
+    ) {
+        // Validate token and handle errors
+        if (!authService.verifyResetToken(token)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid password reset token");
+        }
+
+        authService.resetPassword(resetPasswordDto);
+        return ResponseEntity.ok(Map.of("message", "Your password has been reset successfully"));
+    }
+
 }

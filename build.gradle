@@ -22,6 +22,10 @@ repositories {
 }
 
 dependencies {
+    // Password Validation
+    // https://mvnrepository.com/artifact/com.github.ankurpathak.password/password-validation
+    implementation 'com.github.ankurpathak.password:password-validation:1.0.2'
+
     // Resource Server | JWT security
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 
