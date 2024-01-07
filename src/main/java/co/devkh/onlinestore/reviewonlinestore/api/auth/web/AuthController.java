@@ -85,4 +85,9 @@ public class AuthController {
         return ResponseEntity.ok(Map.of("message", "Your password has been reset successfully"));
     }
 
+    @PutMapping("/change-password")
+    public ResponseEntity<Object> changePassword(@RequestBody @Valid ChangePasswordDto changePasswordDto){
+        return authService.changePassword(changePasswordDto);
+    }
+
 }

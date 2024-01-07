@@ -2,6 +2,7 @@ package co.devkh.onlinestore.reviewonlinestore.api.auth;
 
 import co.devkh.onlinestore.reviewonlinestore.api.auth.web.*;
 import jakarta.mail.MessagingException;
+import org.springframework.http.ResponseEntity;
 
 public interface AuthService {
     AuthDto refreshToken(RefreshTokenDto refreshTokenDto);
@@ -34,4 +35,6 @@ public interface AuthService {
 
     boolean verifyResetToken(String token);
 
+    // change password service
+    ResponseEntity<Object> changePassword(ChangePasswordDto changePasswordDto);
 }
