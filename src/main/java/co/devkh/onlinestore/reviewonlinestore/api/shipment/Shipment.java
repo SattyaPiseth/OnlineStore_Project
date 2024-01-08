@@ -3,7 +3,7 @@ package co.devkh.onlinestore.reviewonlinestore.api.shipment;
 import co.devkh.onlinestore.reviewonlinestore.api.payment.PaymentDetail;
 import co.devkh.onlinestore.reviewonlinestore.api.payment.PaymentType;
 import co.devkh.onlinestore.reviewonlinestore.api.store.Store;
-import co.devkh.onlinestore.reviewonlinestore.api.user.User;
+import co.devkh.onlinestore.reviewonlinestore.api.user.data.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

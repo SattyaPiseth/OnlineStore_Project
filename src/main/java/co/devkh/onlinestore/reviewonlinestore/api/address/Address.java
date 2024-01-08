@@ -1,6 +1,6 @@
 package co.devkh.onlinestore.reviewonlinestore.api.address;
 
-import co.devkh.onlinestore.reviewonlinestore.api.user.User;
+import co.devkh.onlinestore.reviewonlinestore.api.user.data.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

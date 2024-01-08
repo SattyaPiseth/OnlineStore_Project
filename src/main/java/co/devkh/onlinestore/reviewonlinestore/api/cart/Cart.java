@@ -1,7 +1,7 @@
 package co.devkh.onlinestore.reviewonlinestore.api.cart;
 
-import co.devkh.onlinestore.reviewonlinestore.api.product.Product;
-import co.devkh.onlinestore.reviewonlinestore.api.user.User;
+import co.devkh.onlinestore.reviewonlinestore.api.product.data.Product;
+import co.devkh.onlinestore.reviewonlinestore.api.user.data.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

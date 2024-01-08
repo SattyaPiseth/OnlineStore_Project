@@ -1,14 +1,11 @@
 package co.devkh.onlinestore.reviewonlinestore.api.order;
 
 import co.devkh.onlinestore.reviewonlinestore.api.payment.PaymentType;
-import co.devkh.onlinestore.reviewonlinestore.api.user.User;
+import co.devkh.onlinestore.reviewonlinestore.api.user.data.User;
 import jakarta.persistence.*;
-import jakarta.xml.bind.annotation.XmlType;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 

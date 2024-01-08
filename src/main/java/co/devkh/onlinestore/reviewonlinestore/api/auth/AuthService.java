@@ -1,6 +1,6 @@
 package co.devkh.onlinestore.reviewonlinestore.api.auth;
 
-import co.devkh.onlinestore.reviewonlinestore.api.auth.web.*;
+import co.devkh.onlinestore.reviewonlinestore.api.auth.web.Dto.*;
 import jakarta.mail.MessagingException;
 import org.springframework.http.ResponseEntity;
 
@@ -37,4 +37,5 @@ public interface AuthService {
 
     // change password service
     ResponseEntity<Object> changePassword(ChangePasswordDto changePasswordDto);
+
 }

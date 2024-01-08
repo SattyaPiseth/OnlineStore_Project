@@ -1,11 +1,11 @@
 package co.devkh.onlinestore.reviewonlinestore.init;
 
-import co.devkh.onlinestore.reviewonlinestore.api.product.Category;
-import co.devkh.onlinestore.reviewonlinestore.api.product.CategoryRepository;
-import co.devkh.onlinestore.reviewonlinestore.api.user.Authority;
-import co.devkh.onlinestore.reviewonlinestore.api.user.AuthorityRepository;
-import co.devkh.onlinestore.reviewonlinestore.api.user.Role;
-import co.devkh.onlinestore.reviewonlinestore.api.user.RoleRepository;
+import co.devkh.onlinestore.reviewonlinestore.api.product.data.Category;
+import co.devkh.onlinestore.reviewonlinestore.api.product.data.CategoryRepository;
+import co.devkh.onlinestore.reviewonlinestore.api.user.data.Authority;
+import co.devkh.onlinestore.reviewonlinestore.api.user.data.AuthorityRepository;
+import co.devkh.onlinestore.reviewonlinestore.api.user.data.Role;
+import co.devkh.onlinestore.reviewonlinestore.api.user.data.RoleRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -72,17 +72,17 @@ public class DataInit {
         roleRepository.saveAll(List.of(adminRole,staffRole,customerRole));
 
 
-//        categoryRepository.save(Category.builder()
-//                        .name("Electronic")
-//                        .description("Electronic")
-//                        .build());
-//        categoryRepository.save(Category.builder()
-//                .name("Technologies")
-//                .description("Technologies")
-//                .build());
-//        categoryRepository.save(Category.builder()
-//                .name("LifeStyles")
-//                .description("LifeStyles")
-//                .build());
+        categoryRepository.save(Category.builder()
+                        .name("Electronic")
+                        .description("Electronic")
+                        .build());
+        categoryRepository.save(Category.builder()
+                .name("Technologies")
+                .description("Technologies")
+                .build());
+        categoryRepository.save(Category.builder()
+                .name("LifeStyles")
+                .description("LifeStyles")
+                .build());
     }
 }

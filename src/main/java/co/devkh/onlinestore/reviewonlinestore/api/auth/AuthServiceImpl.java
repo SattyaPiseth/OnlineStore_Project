@@ -1,9 +1,9 @@
 package co.devkh.onlinestore.reviewonlinestore.api.auth;
 
-import co.devkh.onlinestore.reviewonlinestore.api.auth.web.*;
+import co.devkh.onlinestore.reviewonlinestore.api.auth.web.Dto.*;
 import co.devkh.onlinestore.reviewonlinestore.api.mail.Mail;
 import co.devkh.onlinestore.reviewonlinestore.api.mail.MailService;
-import co.devkh.onlinestore.reviewonlinestore.api.user.User;
+import co.devkh.onlinestore.reviewonlinestore.api.user.data.User;
 import co.devkh.onlinestore.reviewonlinestore.api.user.UserService;
 import co.devkh.onlinestore.reviewonlinestore.api.user.web.NewUserDto;
 import co.devkh.onlinestore.reviewonlinestore.util.RandomUtil;
@@ -31,7 +31,6 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -116,6 +115,7 @@ public class AuthServiceImpl implements AuthService {
         // First email with verification code
         Mail<String> verificationCodeMail = createVerificationEmail(
                 newUserDto.email(), verificationCode, "auth/verify-mail");
+        log.info("Verification Code Mail: {}", verificationCodeMail);
         mailService.sendMail(verificationCodeMail);
 
         // Second email with verification link
@@ -129,8 +129,8 @@ public class AuthServiceImpl implements AuthService {
     private Mail<String> createVerificationEmail(String recipient, String metaData, String template) {
         Mail<String> mail = new Mail<>();
         mail.setSubject("Email Verification");
-        mail.setSender(adminMail);
-        mail.setReceiver(recipient);
+        mail.setSender(recipient);  //destination -> recipient is the email address of the receiver
+        mail.setReceiver(adminMail); //source -> adminMail is the email address of the sender
         mail.setTemplate(template);
         mail.setMetaData(metaData);
         return mail;
@@ -226,8 +226,8 @@ public class AuthServiceImpl implements AuthService {
     private Mail<String> createPasswordResetEmail(String recipient, String resetLink) {
         Mail<String> mail = new Mail<>();
         mail.setSubject("Reset Password");
-        mail.setSender(adminMail);
-        mail.setReceiver(recipient);
+        mail.setSender(recipient);  //destination -> recipient is the email address of the receiver
+        mail.setReceiver(adminMail); //source -> adminMail is the email address of the sender
         mail.setTemplate("auth/forgot-password-mail");
         mail.setMetaData(resetLink);
         return mail;
@@ -276,7 +276,6 @@ public class AuthServiceImpl implements AuthService {
         return ResponseEntity.ok(Map.of("message", "Password changed successfully"));
     }
 
-
     private String generateAccessToken(GenerateTokenDto generateTokenDto){
         JwtClaimsSet jwtClaimsSet = JwtClaimsSet.builder()
                 .id(generateTokenDto.auth())
@@ -287,8 +286,8 @@ public class AuthServiceImpl implements AuthService {
                 .audience(List.of("Public Client"))
                 .claim("scope",generateTokenDto.scope())
                 .build();
-        return jwtEncoder.encode(JwtEncoderParameters.from(jwtClaimsSet)).getTokenValue();
 
+        return jwtEncoder.encode(JwtEncoderParameters.from(jwtClaimsSet)).getTokenValue();
     }
     private String generateRefreshToken(GenerateTokenDto generateTokenDto){
         JwtClaimsSet jwtRefreshTokenClaimsSet = JwtClaimsSet.builder()

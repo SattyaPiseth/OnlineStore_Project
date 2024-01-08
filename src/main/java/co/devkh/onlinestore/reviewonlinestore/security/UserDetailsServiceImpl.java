@@ -1,7 +1,7 @@
 package co.devkh.onlinestore.reviewonlinestore.security;
 
-import co.devkh.onlinestore.reviewonlinestore.api.user.User;
-import co.devkh.onlinestore.reviewonlinestore.api.user.UserRepository;
+import co.devkh.onlinestore.reviewonlinestore.api.user.data.User;
+import co.devkh.onlinestore.reviewonlinestore.api.user.data.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,8 +1,8 @@
 package co.devkh.onlinestore.reviewonlinestore.api.supplier;
 
 import co.devkh.onlinestore.reviewonlinestore.api.inventory.Inventory;
-import co.devkh.onlinestore.reviewonlinestore.api.product.Category;
-import co.devkh.onlinestore.reviewonlinestore.api.product.Product;
+import co.devkh.onlinestore.reviewonlinestore.api.product.data.Category;
+import co.devkh.onlinestore.reviewonlinestore.api.product.data.Product;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

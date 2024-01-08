@@ -1,5 +1,6 @@
 package co.devkh.onlinestore.reviewonlinestore.api.user;
 
+import co.devkh.onlinestore.reviewonlinestore.api.user.data.User;
 import co.devkh.onlinestore.reviewonlinestore.api.user.web.NewUserDto;
 import co.devkh.onlinestore.reviewonlinestore.api.user.web.UpdateUserDto;
 import co.devkh.onlinestore.reviewonlinestore.api.user.web.UserDto;

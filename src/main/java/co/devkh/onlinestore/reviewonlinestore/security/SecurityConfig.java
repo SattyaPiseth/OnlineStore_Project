@@ -150,6 +150,9 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.PUT, "/api/v1/users/**").hasAuthority("SCOPE_user:update")
                 .requestMatchers(HttpMethod.DELETE, "/api/v1/users/**").hasAuthority("SCOPE_user:delete")
 
+
+
+
                 .anyRequest().authenticated());
 
         // TODO : Use default login
@@ -168,6 +171,7 @@ public class SecurityConfig {
     // TODO Purpose when we configured already we need to return build this configured.
         return httpSecurity.build();
     }
+
 
     @Bean
     @Primary

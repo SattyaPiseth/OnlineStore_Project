@@ -1,6 +1,8 @@
 package co.devkh.onlinestore.reviewonlinestore.api.auth.web;
 
 import co.devkh.onlinestore.reviewonlinestore.api.auth.AuthService;
+import co.devkh.onlinestore.reviewonlinestore.api.auth.web.Dto.VerifyCodeDto;
+import co.devkh.onlinestore.reviewonlinestore.api.auth.web.Dto.VerifyDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

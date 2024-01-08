@@ -1,6 +1,6 @@
 package co.devkh.onlinestore.reviewonlinestore.security;
 
-import co.devkh.onlinestore.reviewonlinestore.api.user.User;
+import co.devkh.onlinestore.reviewonlinestore.api.user.data.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

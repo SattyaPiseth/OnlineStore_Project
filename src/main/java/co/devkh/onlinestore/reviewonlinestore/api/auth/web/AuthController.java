@@ -1,8 +1,7 @@
 package co.devkh.onlinestore.reviewonlinestore.api.auth.web;
 
-import co.devkh.onlinestore.reviewonlinestore.api.auth.AuthRepository;
 import co.devkh.onlinestore.reviewonlinestore.api.auth.AuthService;
-import co.devkh.onlinestore.reviewonlinestore.api.user.User;
+import co.devkh.onlinestore.reviewonlinestore.api.auth.web.Dto.*;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +27,6 @@ public class AuthController {
     }
     @PostMapping("/login")
     public AuthDto login(@Valid @RequestBody LoginDto loginDto){
-
         return authService.login(loginDto);
     }
     @ResponseStatus(HttpStatus.CREATED)
