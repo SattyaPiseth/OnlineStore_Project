@@ -4,15 +4,15 @@ import co.devkh.onlinestore.reviewonlinestore.api.inventory.Inventory;
 import co.devkh.onlinestore.reviewonlinestore.api.product.data.Category;
 import co.devkh.onlinestore.reviewonlinestore.api.product.data.Product;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "suppliers")
 public class Supplier {
@@ -32,8 +32,6 @@ public class Supplier {
     private String address;
     @Column(length = 80)
     private String city;
-    @Column(length = 50)
-    private String state;
     @Column(length = 50)
     private String country;
     @Column(length = 60,nullable = false)
