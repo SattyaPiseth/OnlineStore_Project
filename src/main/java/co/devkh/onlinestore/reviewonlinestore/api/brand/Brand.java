@@ -19,9 +19,10 @@ public class Brand {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(nullable = false,unique = true)
-    private String brand_uuid;
+    private String brandUuid;
     @Column(length = 100,nullable = false)
-    private String brand_name;
+    private String brandName;
+
 
     @ManyToMany(mappedBy = "brands")
 //    @JoinTable(joinColumns =

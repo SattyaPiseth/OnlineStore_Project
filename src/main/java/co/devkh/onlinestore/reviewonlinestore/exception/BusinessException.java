@@ -1,6 +1,6 @@
 package co.devkh.onlinestore.reviewonlinestore.exception;
 
-import co.devkh.onlinestore.reviewonlinestore.base.BaseError;
+import co.devkh.onlinestore.reviewonlinestore.base.error.BaseError;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

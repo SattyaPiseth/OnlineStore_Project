@@ -1,6 +1,6 @@
 package co.devkh.onlinestore.reviewonlinestore.exception;
 
-import co.devkh.onlinestore.reviewonlinestore.base.FieldError;
+import co.devkh.onlinestore.reviewonlinestore.base.error.FieldError;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;

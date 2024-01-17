@@ -1,6 +1,5 @@
 package co.devkh.onlinestore.reviewonlinestore.exception.category;
 
-import co.devkh.onlinestore.reviewonlinestore.base.FieldError;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;

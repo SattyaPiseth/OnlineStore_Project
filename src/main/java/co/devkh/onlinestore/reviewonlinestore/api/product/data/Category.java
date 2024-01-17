@@ -4,9 +4,9 @@ import co.devkh.onlinestore.reviewonlinestore.api.brand.Brand;
 import co.devkh.onlinestore.reviewonlinestore.api.supplier.Supplier;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter

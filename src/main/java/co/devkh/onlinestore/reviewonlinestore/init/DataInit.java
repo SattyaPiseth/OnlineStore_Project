@@ -33,7 +33,8 @@ public class DataInit {
         Authority writeProduct = Authority.builder().name("product:write").build();
         Authority deleteProduct = Authority.builder().name("product:delete").build();
         Authority updateProduct = Authority.builder().name("product:update").build();
-        Set<Authority> productAuthorities = Set.of(readProduct,writeProduct,deleteProduct,updateProduct);
+        Authority patchProduct = Authority.builder().name("product:patch").build();
+        Set<Authority> productAuthorities = Set.of(readProduct,writeProduct,deleteProduct,updateProduct,patchProduct);
         authorityRepository.saveAll(productAuthorities);
 
         // User-Authorities-Management
@@ -41,9 +42,13 @@ public class DataInit {
         Authority writeUser = Authority.builder().name("user:write").build();
         Authority deleteUser = Authority.builder().name("user:delete").build();
         Authority updateUser = Authority.builder().name("user:update").build();
+        Authority patchUser = Authority.builder().name("user:patch").build();
         Authority userProfile = Authority.builder().name("user:profile").build();
-        Set<Authority> userAuthorities = Set.of(readUser,writeUser,deleteUser,updateUser,userProfile);
+        Set<Authority> userAuthorities = Set.of(readUser,writeUser,deleteUser,updateUser,patchUser,userProfile);
         authorityRepository.saveAll(userAuthorities);
+
+        // Role-Authorities-Management
+
 
         // Combine Authorities (Staff + User)
         Set<Authority> fullAuthorities = new HashSet<>(){{
@@ -75,95 +80,95 @@ public class DataInit {
         roleRepository.saveAll(List.of(adminRole,staffRole,customerRole));
 
         // Brands Management : Init Data
-        Brand asus = Brand.builder().brand_uuid(UUID.randomUUID().toString()).brand_name("ASUS").build();
-        Brand asusZenBook = Brand.builder().brand_uuid(UUID.randomUUID().toString()).brand_name("ASUS ZenBook").build();
-        Brand tufGaming = Brand.builder().brand_uuid(UUID.randomUUID().toString()).brand_name("TUF GAMING").build();
-        Brand rog = Brand.builder().brand_uuid(UUID.randomUUID().toString()).brand_name("REPUBLIC OF GAMERS").build();
+        Brand asus = Brand.builder().brandUuid(UUID.randomUUID().toString()).brandName("ASUS").build();
+        Brand asusZenBook = Brand.builder().brandUuid(UUID.randomUUID().toString()).brandName("ASUS ZenBook").build();
+        Brand tufGaming = Brand.builder().brandUuid(UUID.randomUUID().toString()).brandName("TUF GAMING").build();
+        Brand rog = Brand.builder().brandUuid(UUID.randomUUID().toString()).brandName("REPUBLIC OF GAMERS").build();
         Set<Brand> asusBrand = Set.of(asus,asusZenBook,tufGaming,rog);
 //        brandRepository.saveAll(asusBrand);
 
-        Brand msi = Brand.builder().brand_uuid(UUID.randomUUID().toString()).brand_name("MSI").build();
+        Brand msi = Brand.builder().brandUuid(UUID.randomUUID().toString()).brandName("MSI").build();
         Set<Brand> msiBrand = Set.of(msi);
 //        brandRepository.saveAll(msiBrand);
 
-        Brand lenovo = Brand.builder().brand_uuid(UUID.randomUUID().toString()).brand_name("LENOVO").build();
+        Brand lenovo = Brand.builder().brandUuid(UUID.randomUUID().toString()).brandName("LENOVO").build();
         Set<Brand> lenovoBrand = Set.of(lenovo);
 //        brandRepository.saveAll(lenovoBrand);
 
-        Brand alien_ware = Brand.builder().brand_uuid(UUID.randomUUID().toString()).brand_name("ALIEN_WARE").build();
-        Brand predator = Brand.builder().brand_uuid(UUID.randomUUID().toString()).brand_name("PREDATOR").build();
+        Brand alien_ware = Brand.builder().brandUuid(UUID.randomUUID().toString()).brandName("ALIEN_WARE").build();
+        Brand predator = Brand.builder().brandUuid(UUID.randomUUID().toString()).brandName("PREDATOR").build();
         Set<Brand> dellBrand = Set.of(alien_ware,predator);
 //        brandRepository.saveAll(dellBrand);
 
-        Brand intel = Brand.builder().brand_uuid(UUID.randomUUID().toString()).brand_name("INTEL").build();
+        Brand intel = Brand.builder().brandUuid(UUID.randomUUID().toString()).brandName("INTEL").build();
         Set<Brand> intelBrand = Set.of(intel);
 //        brandRepository.saveAll(intelBrand);
 
-        Brand amd = Brand.builder().brand_uuid(UUID.randomUUID().toString()).brand_name("AMD").build();
+        Brand amd = Brand.builder().brandUuid(UUID.randomUUID().toString()).brandName("AMD").build();
         Set<Brand> amdBrand = Set.of(amd);
 //        brandRepository.saveAll(amdBrand);
 
-        Brand kingston = Brand.builder().brand_uuid(UUID.randomUUID().toString()).brand_name("KINGSTON").build();
+        Brand kingston = Brand.builder().brandUuid(UUID.randomUUID().toString()).brandName("KINGSTON").build();
         Set<Brand> kingstonBrand = Set.of(kingston);
 //        brandRepository.saveAll(kingstonBrand);
 
-        Brand xpg = Brand.builder().brand_uuid(UUID.randomUUID().toString()).brand_name("XPG").build();
+        Brand xpg = Brand.builder().brandUuid(UUID.randomUUID().toString()).brandName("XPG").build();
         Set<Brand> xpgBrand = Set.of(xpg);
 //        brandRepository.saveAll(xpgBrand);
 
-        Brand corsair = Brand.builder().brand_uuid(UUID.randomUUID().toString()).brand_name("CORSAIR").build();
+        Brand corsair = Brand.builder().brandUuid(UUID.randomUUID().toString()).brandName("CORSAIR").build();
         Set<Brand> corsairBrand = Set.of(corsair);
 //        brandRepository.saveAll(corsairBrand);
 
-        Brand adata = Brand.builder().brand_uuid(UUID.randomUUID().toString()).brand_name("ADATA").build();
+        Brand adata = Brand.builder().brandUuid(UUID.randomUUID().toString()).brandName("ADATA").build();
         Set<Brand> adataBrand = Set.of(adata);
 //        brandRepository.saveAll(adataBrand);
 
-        Brand gigabyte = Brand.builder().brand_uuid(UUID.randomUUID().toString()).brand_name("GIGABYTE").build();
+        Brand gigabyte = Brand.builder().brandUuid(UUID.randomUUID().toString()).brandName("GIGABYTE").build();
         Set<Brand> gigabyteBrand = Set.of(gigabyte);
 //        brandRepository.saveAll(gigabyteBrand);
 
-        Brand aorus = Brand.builder().brand_uuid(UUID.randomUUID().toString()).brand_name("AORUS").build();
+        Brand aorus = Brand.builder().brandUuid(UUID.randomUUID().toString()).brandName("AORUS").build();
         Set<Brand> aorusBrand = Set.of(aorus);
 //        brandRepository.saveAll(aorusBrand);
 
-        Brand samsung = Brand.builder().brand_uuid(UUID.randomUUID().toString()).brand_name("SAMSUNG").build();
+        Brand samsung = Brand.builder().brandUuid(UUID.randomUUID().toString()).brandName("SAMSUNG").build();
         Set<Brand> samsungBrand = Set.of(samsung);
 //        brandRepository.saveAll(samsungBrand);
 
-        Brand razer = Brand.builder().brand_uuid(UUID.randomUUID().toString()).brand_name("RAZER").build();
+        Brand razer = Brand.builder().brandUuid(UUID.randomUUID().toString()).brandName("RAZER").build();
         Set<Brand> razerBrand = Set.of(razer);
 //        brandRepository.saveAll(razerBrand);
 
-        Brand logitech = Brand.builder().brand_uuid(UUID.randomUUID().toString()).brand_name("LOGITECH").build();
+        Brand logitech = Brand.builder().brandUuid(UUID.randomUUID().toString()).brandName("LOGITECH").build();
         Set<Brand> logitechBrand = Set.of(logitech);
 //        brandRepository.saveAll(logitechBrand);
 
-        Brand scorpion = Brand.builder().brand_uuid(UUID.randomUUID().toString()).brand_name("SCORPION").build();
+        Brand scorpion = Brand.builder().brandUuid(UUID.randomUUID().toString()).brandName("SCORPION").build();
         Set<Brand> scorpionBrand = Set.of(scorpion);
 //        brandRepository.saveAll(scorpionBrand);
 
-        Brand dx_racer = Brand.builder().brand_uuid(UUID.randomUUID().toString()).brand_name("DX-RACER").build();
+        Brand dx_racer = Brand.builder().brandUuid(UUID.randomUUID().toString()).brandName("DX-RACER").build();
         Set<Brand> dx_racerBrand = Set.of(dx_racer);
 //        brandRepository.saveAll(dx_racerBrand);
 
-        Brand tp_link = Brand.builder().brand_uuid(UUID.randomUUID().toString()).brand_name("TP-LINK").build();
+        Brand tp_link = Brand.builder().brandUuid(UUID.randomUUID().toString()).brandName("TP-LINK").build();
         Set<Brand> tp_linkBrand = Set.of(tp_link);
 //        brandRepository.saveAll(tp_linkBrand);
 
-        Brand truPower = Brand.builder().brand_uuid(UUID.randomUUID().toString()).brand_name("TRU-POWER").build();
+        Brand truPower = Brand.builder().brandUuid(UUID.randomUUID().toString()).brandName("TRU-POWER").build();
         Set<Brand> truPowerBrand = Set.of(truPower);
 //        brandRepository.saveAll(truPowerBrand);
 
-        Brand apc = Brand.builder().brand_uuid(UUID.randomUUID().toString()).brand_name("APC").build();
+        Brand apc = Brand.builder().brandUuid(UUID.randomUUID().toString()).brandName("APC").build();
         Set<Brand> apcBrand = Set.of(apc);
 //        brandRepository.saveAll(apcBrand);
 
-        Brand orico = Brand.builder().brand_uuid(UUID.randomUUID().toString()).brand_name("ORICO").build();
+        Brand orico = Brand.builder().brandUuid(UUID.randomUUID().toString()).brandName("ORICO").build();
         Set<Brand> oricoBrand = Set.of(orico);
 //        brandRepository.saveAll(oricoBrand);
 
-        Brand targus = Brand.builder().brand_uuid(UUID.randomUUID().toString()).brand_name("TARGUS").build();
+        Brand targus = Brand.builder().brandUuid(UUID.randomUUID().toString()).brandName("TARGUS").build();
         Set<Brand> targusBrand = Set.of(targus);
 //        brandRepository.saveAll(targusBrand);
 
@@ -261,9 +266,9 @@ public class DataInit {
         // Supplier <-> Category Management : Laptop, PC Hardware, Peripherals, Accessories
         Supplier asusMetaData = Supplier.builder()
                 .uuid(UUID.randomUUID().toString())
-                .company_name("ASUSTeK Computer Inc.")
-                .contact_name("Charlotte Cooper")
-                .contact_email("email@asus.com")
+                .companyName("ASUSTeK Computer Inc.")
+                .contactName("Charlotte Cooper")
+                .contactEmail("email@asus.com")
                 .address("No. 15, Li-De Road, Beitou District, Taipei 112, Taiwan")
                 .city("Taipei City")
                 .country("Taiwan")
@@ -279,9 +284,9 @@ public class DataInit {
 
         Supplier msiMetaData = Supplier.builder()
                 .uuid(UUID.randomUUID().toString())
-                .company_name("Micro-Star International Co., Ltd.")
-                .contact_name("Shelley Burke")
-                .contact_email("acs@msi.com")
+                .companyName("Micro-Star International Co., Ltd.")
+                .contactName("Shelley Burke")
+                .contactEmail("acs@msi.com")
                 .address("No. 69, Lide St., Zhonghe Dist., New Taipei City 235, Taiwan")
                 .city("Taipei City")
                 .country("Taiwan")
@@ -296,9 +301,9 @@ public class DataInit {
 
         Supplier lenovoMetaData = Supplier.builder()
                 .uuid(UUID.randomUUID().toString())
-                .company_name("Lenovo Group Limited")
-                .contact_name("Regina Murphy")
-                .contact_email("Lencare@lenovo.com")
+                .companyName("Lenovo Group Limited")
+                .contactName("Regina Murphy")
+                .contactEmail("Lencare@lenovo.com")
                 .address("Quarry Bay, Hong Kong")
                 .city("Quarry Bay")
                 .country("Hong Kong")
@@ -311,9 +316,9 @@ public class DataInit {
 
         Supplier dellMetaData = Supplier.builder()
                 .uuid(UUID.randomUUID().toString())
-                .company_name("Dell Technologies Inc.")
-                .contact_name("Yoshi Nagase")
-                .contact_email("Board_of_Directors@Dell.com")
+                .companyName("Dell Technologies Inc.")
+                .contactName("Yoshi Nagase")
+                .contactEmail("Board_of_Directors@Dell.com")
                 .address("Round Rock, Texas, United States")
                 .city("Texas")
                 .country("United States")
@@ -326,9 +331,9 @@ public class DataInit {
 
         Supplier acerMetaData = Supplier.builder()
                 .uuid(UUID.randomUUID().toString())
-                .company_name("Acer Inc")
-                .contact_name("Antonio del Valle Saavedra ")
-                .contact_email("ail.easycare@acer.com")
+                .companyName("Acer Inc")
+                .contactName("Antonio del Valle Saavedra ")
+                .contactEmail("ail.easycare@acer.com")
                 .address("New Taipei City, Taiwan")
                 .city("Taipei City")
                 .country("Taiwan")
@@ -341,9 +346,9 @@ public class DataInit {
 
         Supplier intelMetaData = Supplier.builder()
                 .uuid(UUID.randomUUID().toString())
-                .company_name("Intel Corporation")
-                .contact_name("Mayumi Ohno")
-                .contact_email("John.Smith@intel.com")
+                .companyName("Intel Corporation")
+                .contactName("Mayumi Ohno")
+                .contactEmail("John.Smith@intel.com")
                 .address("Santa Clara, California")
                 .city("California")
                 .country("United States")
@@ -356,8 +361,8 @@ public class DataInit {
 
         Supplier amdMetaData = Supplier.builder()
                 .uuid(UUID.randomUUID().toString())
-                .company_name("Advanced Micro Devices, Inc.")
-                .contact_name("Ian Devling")
+                .companyName("Advanced Micro Devices, Inc.")
+                .contactName("Ian Devling")
                 .address("Santa Clara, California, United States")
                 .city("California")
                 .country("United States")
@@ -370,8 +375,8 @@ public class DataInit {
 
         Supplier kingstonMetaData = Supplier.builder()
                 .uuid(UUID.randomUUID().toString())
-                .company_name("Kingston Technology Corporation")
-                .contact_name("Peter Wilson")
+                .companyName("Kingston Technology Corporation")
+                .contactName("Peter Wilson")
                 .address("17600 Newhope Street Fountain Valley, CA 92708 USA")
                 .city("California")
                 .country("United States")
@@ -384,23 +389,24 @@ public class DataInit {
 
         Supplier adataMetaData = Supplier.builder()
                 .uuid(UUID.randomUUID().toString())
-                .company_name("ADATA Technology Co., Ltd.")
-                .contact_name("Lars Peterson")
-                .contact_email("adata@adata.com")
+                .companyName("ADATA Technology Co., Ltd.")
+                .contactName("Lars Peterson")
+                .contactEmail("adata@adata.com")
                 .address("China. Beijing")
                 .city("Beijing")
                 .country("China")
                 .phone("+86-10-5128-6922")
                 .categories(new ArrayList<>(){{
                     add(pc_hardware);
+                    add(accessories);
                 }})
                 .build();
         Set<Supplier> adataSupplier = Set.of(adataMetaData);
 
         Supplier corsairMetaData = Supplier.builder()
                 .uuid(UUID.randomUUID().toString())
-                .company_name("Corsair Gaming, Inc.")
-                .contact_name("Carlos Diaz")
+                .companyName("Corsair Gaming, Inc.")
+                .contactName("Carlos Diaz")
                 .address("115 N. McCarthy Blvd. Milpitas, CA 95035")
                 .city("California")
                 .country("United States")
@@ -414,9 +420,9 @@ public class DataInit {
 
         Supplier gigabyteMetaData = Supplier.builder()
                 .uuid(UUID.randomUUID().toString())
-                .company_name("Gigabyte Technology")
-                .contact_name("Petra Winkler")
-                .contact_email("www.gigabyte.com")
+                .companyName("Gigabyte Technology")
+                .contactName("Petra Winkler")
+                .contactEmail("www.gigabyte.com")
                 .address("No.6, Baoqiang Rd., Xindian Dist., New Taipei City 231, Taiwan")
                 .city("Taipei City")
                 .country("Taiwan")
@@ -429,23 +435,24 @@ public class DataInit {
 
         Supplier samsungMetaData = Supplier.builder()
                 .uuid(UUID.randomUUID().toString())
-                .company_name("Samsung Electronics Co., Ltd.")
-                .contact_name("Martin Bein")
-                .contact_email("www.samsung.com")
+                .companyName("Samsung Electronics Co., Ltd.")
+                .contactName("Martin Bein")
+                .contactEmail("www.samsung.com")
                 .address("129, Samsung-ro, Yeongtong-gu,. Suwon-si, Gyeonggi-do, Korea")
                 .city("Yeongtong-gu,. Suwon-si, Gyeonggi-do")
                 .country("Korea")
                 .phone("0800-555-7267")
                 .categories(new ArrayList<>(){{
                     add(pc_hardware);
+                    add(accessories);
                 }})
                 .build();
         Set<Supplier> samsungSupplier = Set.of(samsungMetaData);
 
         Supplier razerMetaData = Supplier.builder()
                 .uuid(UUID.randomUUID().toString())
-                .company_name("Razer Inc.")
-                .contact_name("Sven Petersen")
+                .companyName("Razer Inc.")
+                .contactName("Sven Petersen")
                 .address("9 Pasteur Ste 100 Irvine, CA 92618 United States")
                 .city("California")
                 .country("United States")
@@ -458,8 +465,8 @@ public class DataInit {
 
         Supplier logitechMetaData = Supplier.builder()
                 .uuid(UUID.randomUUID().toString())
-                .company_name("Logitech International S.A.")
-                .contact_name("Elio Rossi")
+                .companyName("Logitech International S.A.")
+                .contactName("Elio Rossi")
                 .address("3930 North First Street San Jose, CA 95134")
                 .city("California")
                 .country("United States")
@@ -472,9 +479,9 @@ public class DataInit {
 
         Supplier marvoMetaData = Supplier.builder()
                 .uuid(UUID.randomUUID().toString())
-                .company_name("MarvoTech Co.Ltd")
-                .contact_name("Beate Vileid")
-                .contact_email("www.marvo-tech.com")
+                .companyName("MarvoTech Co.Ltd")
+                .contactName("Beate Vileid")
+                .contactEmail("www.marvo-tech.com")
                 .address("6th Floor, Building A, DongFangYaYua")
                 .city("Shenzhen")
                 .country("China")
@@ -487,9 +494,9 @@ public class DataInit {
 
         Supplier dx_racerMetaData = Supplier.builder()
                 .uuid(UUID.randomUUID().toString())
-                .company_name("DXRACER Co.Ltd")
-                .contact_name("Cheryl Saylor")
-                .contact_email("www.dxracer.com")
+                .companyName("DXRACER Co.Ltd")
+                .contactName("Cheryl Saylor")
+                .contactEmail("www.dxracer.com")
                 .address("9177 E. Michigan 36 Whitmore Lake, MI 48189")
                 .city("Michigan")
                 .country("United States")
@@ -499,6 +506,81 @@ public class DataInit {
                 }})
                 .build();
         Set<Supplier> dx_racerSupplier = Set.of(dx_racerMetaData);
+
+        Supplier tpLinkMetaData = Supplier.builder()
+                .uuid(UUID.randomUUID().toString())
+                .companyName("TP-Link Technologies Company Ltd.")
+                .contactName("Wendy Mackenzie")
+                .contactEmail("sales.usa@tp-link.com")
+                .address("Shenzhen Shi, 8 Wushitou Rd, Nanshan Qu, China")
+                .city("Shenzhen")
+                .country("China")
+                .phone("+1 909 527 6804")
+                .categories(new ArrayList<>(){{
+                    add(accessories);
+                }})
+                .build();
+        Set<Supplier> tpLinkSupplier = Set.of(tpLinkMetaData);
+
+        Supplier truPowerMetaData = Supplier.builder()
+                .uuid(UUID.randomUUID().toString())
+                .companyName("Tru Power, Inc.")
+                .contactName("Jean-Guy Lauzon")
+                .contactEmail("www.trupowercorp.com")
+                .address("Washington, DC 20004, US")
+                .city("Washington")
+                .country("United States")
+                .phone("+855-78 888 045")
+                .categories(new ArrayList<>(){{
+                    add(accessories);
+                }})
+                .build();
+        Set<Supplier> truPowerSupplier = Set.of(truPowerMetaData);
+
+        Supplier apcMetaData = Supplier.builder()
+                .uuid(UUID.randomUUID().toString())
+                .companyName("American Power Conversion Corporation")
+                .contactName("Marie Delamare")
+                .contactEmail("contact.nyc@apc.fr")
+                .address("West Kingston, South Kingstown, Rhode Island, United States")
+                .city("West Kingston")
+                .country("United States")
+                .phone("+877-272-2722")
+                .categories(new ArrayList<>(){{
+                    add(accessories);
+                }})
+                .build();
+        Set<Supplier> apcSupplier = Set.of(apcMetaData);
+
+        Supplier oricoMetaData = Supplier.builder()
+                .uuid(UUID.randomUUID().toString())
+                .companyName("Shenzhen ORICO Technologies Co., Ltd.")
+                .contactName("Eliane Noz")
+                .contactEmail("supports@orico.com.cn")
+                .address("19/F, Block 14A, Zhonghaixin Science & Technology Park, Longgang District, Shenzhen, China.")
+                .city("Shenzhen")
+                .country("China")
+                .phone("+867 318 896 5801")
+                .categories(new ArrayList<>(){{
+                    add(accessories);
+                }})
+                .build();
+        Set<Supplier> oricoSupplier = Set.of(oricoMetaData);
+
+        Supplier targusMetaData = Supplier.builder()
+                .uuid(UUID.randomUUID().toString())
+                .companyName("Targus International LLC")
+                .contactName("Chantal Goulet")
+                .contactEmail("ex.jdoe@targus.com")
+                .address("1211 N Miller St.Anaheim, CA 92806")
+                .city("California")
+                .country("United States")
+                .phone("(714) 765-5555")
+                .categories(new ArrayList<>(){{
+                    add(accessories);
+                }})
+                .build();
+        Set<Supplier> targusSupplier = Set.of(targusMetaData);
 
         supplierRepository.saveAll(new ArrayList<>(){{
             addAll(asusSupplier);
@@ -517,6 +599,11 @@ public class DataInit {
             addAll(logitechSupplier);
             addAll(marvoSupplier);
             addAll(dx_racerSupplier);
+            addAll(tpLinkSupplier);
+            addAll(truPowerSupplier);
+            addAll(apcSupplier);
+            addAll(oricoSupplier);
+            addAll(targusSupplier);
         }});
     }
 }

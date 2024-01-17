@@ -9,6 +9,8 @@ import co.devkh.onlinestore.reviewonlinestore.api.user.web.UpdateUserDto;
 import co.devkh.onlinestore.reviewonlinestore.api.user.web.UserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,6 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -42,19 +46,16 @@ public class UserServiceImpl implements UserService{
         return userMapper.toUserDto(user);
     }
 
+
     @Transactional
     @Override
     public void createNewUser(NewUserDto newUserDto) {
-        // Check username if exist
-        if (userRepository.existsByUsernameAndIsDeletedFalse(newUserDto.username())){
-            throw new ResponseStatusException(HttpStatus.CONFLICT,
-                    "Username already exists..!");
-        }
 
-        // Check email if exist
-        if (userRepository.existsByEmailAndIsDeletedFalse(newUserDto.email())){
+        // Check for existing username and email efficiently
+        if (userRepository.existsByUsernameOrEmailAndIsDeletedFalse(
+                newUserDto.username(), newUserDto.email())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,
-                    "Email already exists..!");
+                    "Username or email already exists.");
         }
 
         User newUser = userMapper.fromNewUserDto(newUserDto);
@@ -98,6 +99,8 @@ public class UserServiceImpl implements UserService{
                       String.format("User UUID = %s doesn't exist in db!",uuid)));
         return userMapper.toUserDto(foundUser);
     }
+
+
     @Transactional
     @Override
     public void deleteByUuid(String uuid) {
@@ -107,6 +110,7 @@ public class UserServiceImpl implements UserService{
 
         userRepository.delete(foundUser);
     }
+
     @Transactional
     @Override
     public void updateIsDeletedByUuid(String uuid, Boolean isDeleted) {
@@ -119,6 +123,12 @@ public class UserServiceImpl implements UserService{
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                 String.format("User UUID = %s doesn't exist in db!",uuid));
+    }
+
+
+    @Override
+    public Page<UserDto> findAllUsers(Pageable pageable) {
+        return userRepository.findAll(pageable).map(userMapper::toUserDto);
     }
 
 }

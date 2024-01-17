@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -41,6 +42,7 @@ import java.util.UUID;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
@@ -131,28 +133,26 @@ public class SecurityConfig {
         // TODO: What you want to customize
         httpSecurity.authorizeHttpRequests(auth-> auth
                 .requestMatchers("/api/v1/auth/**","/api/v1/files/**","/file/**","/auth/**","index.html").permitAll()
-                .requestMatchers(HttpMethod.GET,
-                        "/api/v1/categories/**",
-                        "/api/v1/products/**").hasAuthority("SCOPE_product:read")
-                .requestMatchers(HttpMethod.POST,
-                        "/api/v1/categories/**",
-                        "/api/v1/products/**").hasAuthority("SCOPE_product:write")
-                .requestMatchers(HttpMethod.PUT,
-                        "/api/v1/categories/**",
-                        "/api/v1/products/**").hasAuthority("SCOPE_product:update")
-                .requestMatchers(HttpMethod.DELETE,
-                        "/api/v1/categories/**",
-                        "/api/v1/products/**").hasAuthority("SCOPE_product:delete")
-
-                .requestMatchers(HttpMethod.GET, "/api/v1/users/me").hasAuthority("SCOPE_user:profile")
-                .requestMatchers(HttpMethod.GET, "/api/v1/users/**").hasAuthority("SCOPE_user:read")
-                .requestMatchers(HttpMethod.POST, "/api/v1/users/**").hasAuthority("SCOPE_user:write")
-                .requestMatchers(HttpMethod.PUT, "/api/v1/users/**").hasAuthority("SCOPE_user:update")
-                .requestMatchers(HttpMethod.DELETE, "/api/v1/users/**").hasAuthority("SCOPE_user:delete")
-
-
-
-
+//                .requestMatchers(HttpMethod.GET,
+//                        "/api/v1/categories/**",
+//                        "/api/v1/products/**").hasAuthority("SCOPE_product:read")
+//                .requestMatchers(HttpMethod.POST,
+//                        "/api/v1/categories/**",
+//                        "/api/v1/products/**").hasAuthority("SCOPE_product:write")
+//                .requestMatchers(HttpMethod.PUT,
+//                        "/api/v1/categories/**").hasAuthority("SCOPE_product:update")
+//                .requestMatchers(HttpMethod.PATCH,
+//                        "/api/v1/products/**").hasAuthority("SCOPE_product:patch")
+//                .requestMatchers(HttpMethod.DELETE,
+//                        "/api/v1/categories/**",
+//                        "/api/v1/products/**").hasAuthority("SCOPE_product:delete")
+//
+//                .requestMatchers(HttpMethod.GET, "/api/v1/users/me").hasAuthority("SCOPE_user:profile")
+//                .requestMatchers(HttpMethod.GET, "/api/v1/users/**","/api/v1/roles/**").hasAuthority("SCOPE_user:read")
+//                .requestMatchers(HttpMethod.POST, "/api/v1/users/**","/api/v1/roles/**").hasAuthority("SCOPE_user:write")
+//                .requestMatchers(HttpMethod.PUT, "/api/v1/users/**","/api/v1/roles/**").hasAuthority("SCOPE_user:update")
+//                .requestMatchers(HttpMethod.DELETE, "/api/v1/users/**","/api/v1/roles/**").hasAuthority("SCOPE_user:delete")
+//                .requestMatchers(HttpMethod.PATCH, "/api/v1/users/**","/api/v1/roles/**").hasAuthority("SCOPE_user:patch")
                 .anyRequest().authenticated());
 
         // TODO : Use default login

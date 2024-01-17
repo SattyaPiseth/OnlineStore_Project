@@ -1,4 +1,4 @@
-package co.devkh.onlinestore.reviewonlinestore.base;
+package co.devkh.onlinestore.reviewonlinestore.base.error;
 
 import lombok.Builder;
 

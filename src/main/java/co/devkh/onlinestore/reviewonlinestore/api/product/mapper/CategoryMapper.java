@@ -11,6 +11,7 @@ import java.util.List;
 public interface CategoryMapper {
     Category fromCategoryDto(CategoryDto categoryDto);
     CategoryDto toCategoryDto(Category category);
+
     List<CategoryDto> toCategoryDtoList(List<Category> categories);
 //    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void fromCategoryDto(@MappingTarget Category category,CategoryDto updateCategoryDto);

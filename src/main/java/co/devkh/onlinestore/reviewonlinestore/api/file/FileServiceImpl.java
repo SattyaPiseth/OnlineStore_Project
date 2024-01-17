@@ -6,6 +6,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -37,7 +38,7 @@ public class FileServiceImpl implements FileService{
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Resource not found!");
     }
-
+    @Transactional
     @Override
     public void deleteAll() {
         Path path = Paths.get(serverPath);
@@ -53,7 +54,7 @@ public class FileServiceImpl implements FileService{
             throw new RuntimeException(e);
         }
     }
-
+    @Transactional
     @Override
     public void deleteByName(String name) {
         Path path = Paths.get(serverPath+name);
@@ -121,7 +122,7 @@ public class FileServiceImpl implements FileService{
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Resource not found!");
     }
-
+    @Transactional
     @Override
     public FileDto uploadSingle(MultipartFile file) {
         return this.save(file);
@@ -137,7 +138,6 @@ public class FileServiceImpl implements FileService{
         String name = UUID.randomUUID()+"."+extension;
         String uri = fileBaseUri + name;
         Long size = file.getSize();
-
         // Create file path (absolute path)
         Path path = Paths.get(serverPath+name);
 
@@ -156,7 +156,7 @@ public class FileServiceImpl implements FileService{
                 .extension(extension)
                 .build();
     }
-
+    @Transactional
     @Override
     public List<FileDto> uploadMultiple(List<MultipartFile> files) {
        return files.stream().map(this::save)

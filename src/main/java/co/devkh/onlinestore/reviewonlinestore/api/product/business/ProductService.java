@@ -5,7 +5,6 @@ import co.devkh.onlinestore.reviewonlinestore.api.product.web.CreateProductDto;
 import co.devkh.onlinestore.reviewonlinestore.api.product.web.ProductDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Range;
 
 import java.util.List;
 
@@ -51,5 +50,4 @@ public interface ProductService {
      * @return Page<ProductDto>
      */
     Page<ProductDto> searchProducts(String searchTerm, Pageable pageable);
-
 }

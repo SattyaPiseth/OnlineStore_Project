@@ -5,7 +5,19 @@ import jakarta.mail.MessagingException;
 import org.springframework.http.ResponseEntity;
 
 public interface AuthService {
+    /**
+     * Refresh token is used to get new access token
+     * @param refreshTokenDto of Request data from client
+     * @return new access token
+     */
     AuthDto refreshToken(RefreshTokenDto refreshTokenDto);
+
+    /**
+     * Register new user
+     * @param registerDto of Request data from client
+     * @return message for client
+     * @throws MessagingException if email is not valid
+     */
     String register(RegisterDto registerDto) throws MessagingException;
 
 
@@ -27,15 +39,38 @@ public interface AuthService {
      */
     AuthDto login(LoginDto loginDto);
 
+    /**
+     * Verify user by token
+     * @param token of Request data from client
+     */
     void verifyUser(String token);
 
-    void forgotPassword(ForgotPasswordDto forgotPasswordDto) throws MessagingException;
+    /**
+     * Forgot password service
+     * @param forgotPasswordDto of Request data from client
+     * @return message for client
+     * @throws MessagingException if email is not valid
+     */
+    ResponseEntity<?> forgotPassword(ForgotPasswordDto forgotPasswordDto) throws MessagingException;
 
+    /**
+     * Reset password service
+     * @param resetPasswordDto of Request data from client
+     */
     void resetPassword(ResetPasswordDto resetPasswordDto);
 
+    /**
+     * Verify reset token
+     * @param token of Request data from client
+     * @return true if token is valid
+     */
     boolean verifyResetToken(String token);
 
-    // change password service
+    /**
+     * Change password service
+     * @param changePasswordDto of Request data from client
+     * @return message for client
+     */
     ResponseEntity<Object> changePassword(ChangePasswordDto changePasswordDto);
 
 }

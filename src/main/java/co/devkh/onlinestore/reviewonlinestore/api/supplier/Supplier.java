@@ -22,13 +22,13 @@ public class Supplier {
     @Column(unique = true,nullable = false)
     private String uuid;
     @Column(nullable = false, unique = true)
-    private String company_name;
+    private String companyName;
     @Column(length = 100,nullable = false)
-    private String contact_name;
+    private String contactName;
     @Column(length = 150)
-    private String contact_title;
+    private String contactTitle;
     @Column(unique = true)
-    private String contact_email;
+    private String contactEmail;
     private String address;
     @Column(length = 80)
     private String city;

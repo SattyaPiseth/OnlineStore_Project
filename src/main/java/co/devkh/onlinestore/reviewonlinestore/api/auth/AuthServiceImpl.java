@@ -155,7 +155,7 @@ public class AuthServiceImpl implements AuthService {
         authRepository.save(verifiedUser);
     }
 
-
+    @Transactional
     @Override
     public AuthDto login(LoginDto loginDto) {
     // If we have username and password we have to use class UsernamePasswordAuthenticationToken for authenticate;
@@ -203,7 +203,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Transactional
     @Override
-    public void forgotPassword(ForgotPasswordDto forgotPasswordDto) throws MessagingException {
+    public ResponseEntity<?> forgotPassword(ForgotPasswordDto forgotPasswordDto) throws MessagingException {
 
         // Find the user with the matching email, ensuring they are not deleted
         User user = authRepository.findByEmailAndIsDeletedFalse(forgotPasswordDto.email())
@@ -221,6 +221,7 @@ public class AuthServiceImpl implements AuthService {
         mailService.sendMail(passwordResetMail);
         log.info("Password Reset Mail Sent: {}", passwordResetMail);
 
+        return ResponseEntity.ok(Map.of("message", passwordResetLink));
     }
 
     private Mail<String> createPasswordResetEmail(String recipient, String resetLink) {
@@ -233,7 +234,7 @@ public class AuthServiceImpl implements AuthService {
         return mail;
     }
 
-
+    @Transactional
     @Override
     public void resetPassword(ResetPasswordDto resetPasswordDto) {
 
@@ -256,7 +257,7 @@ public class AuthServiceImpl implements AuthService {
     public boolean verifyResetToken(String token) {
         return authRepository.existsByVerifiedTokenAndIsDeletedFalse(token);
     }
-
+    @Transactional
     @Override
     public ResponseEntity<Object> changePassword(ChangePasswordDto changePasswordDto) {
 

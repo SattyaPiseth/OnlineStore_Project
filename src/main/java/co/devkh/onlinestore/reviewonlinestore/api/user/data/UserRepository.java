@@ -1,6 +1,5 @@
 package co.devkh.onlinestore.reviewonlinestore.api.user.data;
 
-import co.devkh.onlinestore.reviewonlinestore.api.user.data.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -32,10 +31,10 @@ public interface UserRepository extends JpaRepository<User,Long> {
     void updateIsDeletedStatusByUuid(@Param("uuid") String uuid,@Param("isDeleted") Boolean isDeleted);
 
     // Auto Derived Query Method
-    Boolean existsByUsernameAndIsDeletedFalse(String username);
 
     Boolean existsByEmailAndIsDeletedFalse(String email);
 
     Optional<User> findByUsernameAndIsDeletedFalseAndIsVerifiedTrue(String username);
 
+    boolean existsByUsernameOrEmailAndIsDeletedFalse(String username, String email);
 }

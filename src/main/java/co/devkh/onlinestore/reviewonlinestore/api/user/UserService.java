@@ -3,7 +3,13 @@ package co.devkh.onlinestore.reviewonlinestore.api.user;
 import co.devkh.onlinestore.reviewonlinestore.api.user.web.NewUserDto;
 import co.devkh.onlinestore.reviewonlinestore.api.user.web.UpdateUserDto;
 import co.devkh.onlinestore.reviewonlinestore.api.user.web.UserDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
+import java.util.Map;
 
 public interface UserService {
 
@@ -50,10 +56,12 @@ public interface UserService {
      * This method is used to update status(enable or disable)
      * for delete a user(Soft-Delete) by UUID
      * default of 'isDeleted' = false
-     * @param uuid of User
+     *
+     * @param uuid      of User
      * @param isDeleted of User
      */
     // Update status : 'is_deleted' by UUID
-    void updateIsDeletedByUuid(String uuid,Boolean isDeleted);
+    void updateIsDeletedByUuid(String uuid, Boolean isDeleted);
 
+    Page<UserDto> findAllUsers(Pageable pageable);
 }

@@ -1,5 +1,6 @@
 package co.devkh.onlinestore.reviewonlinestore.api.product.business;
 
+import co.devkh.onlinestore.reviewonlinestore.api.brand.Brand;
 import co.devkh.onlinestore.reviewonlinestore.api.product.mapper.ProductMapper;
 import co.devkh.onlinestore.reviewonlinestore.api.product.data.Category;
 import co.devkh.onlinestore.reviewonlinestore.api.product.data.Product;
@@ -7,12 +8,13 @@ import co.devkh.onlinestore.reviewonlinestore.api.product.data.ProductRepository
 import co.devkh.onlinestore.reviewonlinestore.api.product.web.UpdateProductDto;
 import co.devkh.onlinestore.reviewonlinestore.api.product.web.CreateProductDto;
 import co.devkh.onlinestore.reviewonlinestore.api.product.web.ProductDto;
+import co.devkh.onlinestore.reviewonlinestore.api.supplier.Supplier;
 import co.devkh.onlinestore.reviewonlinestore.util.RandomUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Range;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -51,6 +53,17 @@ public class ProductServiceImpl implements ProductService {
                 newCategory.setId(updateProductDto.categoryId());
                 product.setCategory(newCategory);
             }
+            if (updateProductDto.brandId() != null){
+                Brand newBrand = new Brand();
+                newBrand.setId(updateProductDto.brandId());
+                product.setBrand(newBrand);
+            }
+            if (updateProductDto.supplierId() != null){
+                Supplier newSupplier = new Supplier();
+                newSupplier.setId(updateProductDto.supplierId());
+                product.setSupplier(newSupplier);
+            }
+
             // Step 4: Save latest product
             productRepository.save(product);
 

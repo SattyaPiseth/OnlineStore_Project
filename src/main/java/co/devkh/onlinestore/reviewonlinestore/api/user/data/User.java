@@ -4,7 +4,6 @@ import co.devkh.onlinestore.reviewonlinestore.api.address.Address;
 import co.devkh.onlinestore.reviewonlinestore.api.cart.Cart;
 import co.devkh.onlinestore.reviewonlinestore.api.order.Order;
 import co.devkh.onlinestore.reviewonlinestore.api.shipment.Shipment;
-import co.devkh.onlinestore.reviewonlinestore.api.user.data.Role;
 import jakarta.persistence.*;
 import lombok.*;
 

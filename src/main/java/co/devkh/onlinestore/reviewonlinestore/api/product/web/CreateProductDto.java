@@ -13,7 +13,19 @@ public record CreateProductDto(@NotBlank(message = "Name is required!")
                                String description,
                                @NotBlank
                                String image,
+                               @NotNull
+                               @Positive
+                               Double unitPrice,
                                @NotNull(message = "Category ID is required!")
                                @Positive(message = "Category ID must be greater than 0")
-                               Integer categoryId) {
+                               Integer categoryId,
+
+                               @NotNull(message = "Brand ID is required!")
+                               @Positive(message = "Brand ID must be greater than 0")
+                               Integer brandId,
+
+                               @NotNull(message = "Supplier ID is required!")
+                               @Positive(message = "Supplier ID must be greater than 0")
+                               Integer supplierId)
+{
 }

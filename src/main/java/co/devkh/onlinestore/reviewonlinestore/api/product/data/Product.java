@@ -4,7 +4,6 @@ import co.devkh.onlinestore.reviewonlinestore.api.brand.Brand;
 import co.devkh.onlinestore.reviewonlinestore.api.cart.Cart;
 import co.devkh.onlinestore.reviewonlinestore.api.inventory.Inventory;
 import co.devkh.onlinestore.reviewonlinestore.api.order.OrderItems;
-import co.devkh.onlinestore.reviewonlinestore.api.product.data.Category;
 import co.devkh.onlinestore.reviewonlinestore.api.shipment.ShipmentDetail;
 import co.devkh.onlinestore.reviewonlinestore.api.supplier.Supplier;
 import jakarta.persistence.*;
@@ -28,6 +27,7 @@ public class Product {
     @Column(name = "pro_code", length = 30, nullable = false, unique = true)
     private String code;
     private String name;
+//    private String slug;
     @Column(columnDefinition = "TEXT")
     private String description;
     @Column(name = "image_url")

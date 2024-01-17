@@ -5,6 +5,7 @@ import co.devkh.onlinestore.reviewonlinestore.api.product.data.Category;
 import co.devkh.onlinestore.reviewonlinestore.api.product.data.CategoryRepository;
 import co.devkh.onlinestore.reviewonlinestore.api.product.web.CategoryDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
@@ -46,7 +48,7 @@ public class CategoryServiceImpl implements CategoryService {
             categoryRepository.delete(category);
         }
     }
-
+    @Transactional
     @Override
     public void deleteById(Integer Id) {
         if (categoryRepository.existsById(Id)){

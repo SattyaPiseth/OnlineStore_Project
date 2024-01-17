@@ -20,15 +20,17 @@ public class AuthController {
     private final AuthService authService;
     @Value("${app.base-uri}")
     private String appBaseUri;
-
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/token")
-    public AuthDto refreshToken(@Valid @RequestBody RefreshTokenDto refreshTokenDto){
+    public AuthDto refreshToken(@ModelAttribute @Valid @RequestBody RefreshTokenDto refreshTokenDto){
         return authService.refreshToken(refreshTokenDto);
     }
+    @ResponseStatus(HttpStatus.OK)
     @PostMapping("/login")
-    public AuthDto login(@Valid @RequestBody LoginDto loginDto){
+    public AuthDto login(@ModelAttribute @Valid @RequestBody LoginDto loginDto){
         return authService.login(loginDto);
     }
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/register")
     public Map<String,String> register(@RequestBody @Valid  RegisterDto registerDto) throws MessagingException {
@@ -39,23 +41,26 @@ public class AuthController {
                 "verify via Verify Email Address",token);
     }
 
-    @PostMapping("/verify")
     @ResponseStatus(HttpStatus.OK)
-    public Map<String,String> verify(@RequestBody @Valid VerifyDto verifyDto){
+    @PostMapping("/verify")
+    public Map<String,String> verify(@ModelAttribute @RequestBody @Valid VerifyDto verifyDto){
         authService.verify(verifyDto);
         return Map.of("message","Congratulation! Email has been verified..!");
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/verify")
     public Map<String,String> verify(@RequestParam("token") String token){
         authService.verifyUser(token);
         return Map.of("message","Congratulation! Email has been verified..!");
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/forgot-password")
-    public Map<String,String> forgotPassword(@RequestBody @Valid ForgotPasswordDto forgotPasswordDto) throws MessagingException {
+    public Map<String,Object> forgotPassword(@ModelAttribute @RequestBody @Valid ForgotPasswordDto forgotPasswordDto) throws MessagingException {
         authService.forgotPassword(forgotPasswordDto);
-        return Map.of("message","We have sent a reset password link to your email");
+        return Map.of("message","We have sent a reset password link to your email",
+                "reset_password_link",authService.forgotPassword(forgotPasswordDto));
     }
 
     @GetMapping("/reset-password")
@@ -69,10 +74,11 @@ public class AuthController {
                 "reset_token",token);
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @PostMapping("/reset-password")
     public ResponseEntity<?> resetPassword(
             @RequestParam("token") String token,
-            @RequestBody @Valid ResetPasswordDto resetPasswordDto
+            @ModelAttribute @RequestBody @Valid ResetPasswordDto resetPasswordDto
     ) {
         // Validate token and handle errors
         if (!authService.verifyResetToken(token)) {
@@ -82,9 +88,9 @@ public class AuthController {
         authService.resetPassword(resetPasswordDto);
         return ResponseEntity.ok(Map.of("message", "Your password has been reset successfully"));
     }
-
+    @ResponseStatus(HttpStatus.OK)
     @PutMapping("/change-password")
-    public ResponseEntity<Object> changePassword(@RequestBody @Valid ChangePasswordDto changePasswordDto){
+    public ResponseEntity<Object> changePassword(@ModelAttribute @RequestBody @Valid ChangePasswordDto changePasswordDto){
         return authService.changePassword(changePasswordDto);
     }
 
