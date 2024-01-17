@@ -11,7 +11,7 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class NonUniqueResultException {
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(jakarta.persistence.NonUniqueResultException.class)
     public Map<String,Object> handleNonUniqueResultException(jakarta.persistence.NonUniqueResultException exception){
 
