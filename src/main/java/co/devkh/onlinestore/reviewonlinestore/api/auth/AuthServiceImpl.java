@@ -4,8 +4,8 @@ import co.devkh.onlinestore.reviewonlinestore.api.auth.web.Dto.*;
 import co.devkh.onlinestore.reviewonlinestore.api.mail.Mail;
 import co.devkh.onlinestore.reviewonlinestore.api.mail.MailService;
 import co.devkh.onlinestore.reviewonlinestore.api.user.data.User;
-import co.devkh.onlinestore.reviewonlinestore.api.user.UserService;
-import co.devkh.onlinestore.reviewonlinestore.api.user.web.NewUserDto;
+import co.devkh.onlinestore.reviewonlinestore.api.user.service.UserService;
+import co.devkh.onlinestore.reviewonlinestore.api.user.web.user_dto.NewUserDto;
 import co.devkh.onlinestore.reviewonlinestore.util.RandomUtil;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
@@ -113,15 +113,15 @@ public class AuthServiceImpl implements AuthService {
         String verificationLink = appBaseUri + "api/v1/auth/verify?token=" + verificationToken;
 
         // First email with verification code
-        Mail<String> verificationCodeMail = createVerificationEmail(
-                newUserDto.email(), verificationCode, "auth/verify-mail");
-        log.info("Verification Code Mail: {}", verificationCodeMail);
-        mailService.sendMail(verificationCodeMail);
+//        Mail<String> verificationCodeMail = createVerificationEmail(
+//                newUserDto.email(), verificationCode, "auth/verify-mail");
+//        log.info("Verification Code Mail: {}", verificationCodeMail);
+//        mailService.sendMail(verificationCodeMail);
 
         // Second email with verification link
-        Mail<String> verificationLinkMail = createVerificationEmail(
-                newUserDto.email(), verificationLink, "auth/verify-token-mail");
-        mailService.sendMail(verificationLinkMail);
+//        Mail<String> verificationLinkMail = createVerificationEmail(
+//                newUserDto.email(), verificationLink, "auth/verify-token-mail");
+//        mailService.sendMail(verificationLinkMail);
 
         return verificationLink;
     }
@@ -221,7 +221,8 @@ public class AuthServiceImpl implements AuthService {
         mailService.sendMail(passwordResetMail);
         log.info("Password Reset Mail Sent: {}", passwordResetMail);
 
-        return ResponseEntity.ok(Map.of("message", passwordResetLink));
+        return ResponseEntity.ok(Map.of("message", passwordResetLink,
+                "reset-password-token",passwordResetToken));
     }
 
     private Mail<String> createPasswordResetEmail(String recipient, String resetLink) {

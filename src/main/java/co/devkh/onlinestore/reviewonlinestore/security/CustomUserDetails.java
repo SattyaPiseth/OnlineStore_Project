@@ -1,43 +1,45 @@
 package co.devkh.onlinestore.reviewonlinestore.security;
 
-import co.devkh.onlinestore.reviewonlinestore.api.user.data.User;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class CustomUserDetails implements UserDetails {
-    private User user;
+//        private User user;
+      private String username;
+      private String password;
+      private Collection<? extends GrantedAuthority> authorities;
+      private boolean enabled;
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        user.getRoles().forEach(role -> {
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
-
-            role.getAuthorities().forEach(authority -> {
-                authorities.add(new SimpleGrantedAuthority(authority.getName()));
-            });
-        });
+//        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+//        user.getRoles().forEach(role -> {
+//            authorities.add(new SimpleGrantedAuthority(role.getName()));
+//
+//            role.getAuthorities().forEach(authority -> {
+//                authorities.add(new SimpleGrantedAuthority(authority.getName()));
+//            });
+//        });
         return authorities;
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return username;
     }
 
     @Override
@@ -57,6 +59,6 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return !user.getIsDeleted();
+        return enabled; //user.getIsVerified();
     }
 }

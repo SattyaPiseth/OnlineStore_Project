@@ -1,12 +1,9 @@
 package co.devkh.onlinestore.reviewonlinestore.api.product.business;
 
-import co.devkh.onlinestore.reviewonlinestore.api.product.web.UpdateProductDto;
-import co.devkh.onlinestore.reviewonlinestore.api.product.web.CreateProductDto;
-import co.devkh.onlinestore.reviewonlinestore.api.product.web.ProductDto;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
-import java.util.List;
+import co.devkh.onlinestore.reviewonlinestore.api.product.dto.UpdateProductDto;
+import co.devkh.onlinestore.reviewonlinestore.api.product.dto.CreateProductDto;
+import co.devkh.onlinestore.reviewonlinestore.base.request.BaseListingRQ;
+import co.devkh.onlinestore.reviewonlinestore.base.response.StructureRS;
 
 public interface ProductService {
     /**
@@ -31,23 +28,19 @@ public interface ProductService {
 
     /**
      * This method is used to retrieve resource product from database
+     *
      * @return List<ProductDto>
      */
-    List<ProductDto> findAll();
+//    Page<ProductDto> findAll(Map<String,String> params, int page, int size);
 
-    /**
-     * This method is used to retrieve resource product by uuid
-     * from database
-     * @param uuid of product
-     * @return ProductDto
-     */
-    ProductDto findByUuid(String uuid);
+//    /**
+//     * This method is used to retrieve resource product by uuid
+//     * from database
+//     * @param uuid of product
+//     * @return ProductDto
+//     */
+//    ProductDto findByUuid(String uuid);
 
-    /**
-     * This method is used to search products by name, category, etc.
-     * @param searchTerm is the search term
-     * @param pageable is the pagination and sorting support
-     * @return Page<ProductDto>
-     */
-    Page<ProductDto> searchProducts(String searchTerm, Pageable pageable);
+    StructureRS getAll(BaseListingRQ request);
+
 }

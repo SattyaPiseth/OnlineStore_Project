@@ -1,10 +1,9 @@
 package co.devkh.onlinestore.reviewonlinestore.api.product.data;
 
-import co.devkh.onlinestore.reviewonlinestore.api.brand.Brand;
+import co.devkh.onlinestore.reviewonlinestore.api.brand.data.Brand;
 import co.devkh.onlinestore.reviewonlinestore.api.supplier.Supplier;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.DynamicUpdate;
 
 import java.util.List;
 
@@ -29,7 +28,7 @@ public class Category {
     @ManyToMany(mappedBy = "categories")
     private List<Supplier> suppliers;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(joinColumns =
         @JoinColumn(name = "cate_id",referencedColumnName = "id"),
             inverseJoinColumns =

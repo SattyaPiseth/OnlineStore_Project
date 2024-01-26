@@ -1,6 +1,6 @@
 package co.devkh.onlinestore.reviewonlinestore.api.product.data;
 
-import co.devkh.onlinestore.reviewonlinestore.api.brand.Brand;
+import co.devkh.onlinestore.reviewonlinestore.api.brand.data.Brand;
 import co.devkh.onlinestore.reviewonlinestore.api.cart.Cart;
 import co.devkh.onlinestore.reviewonlinestore.api.inventory.Inventory;
 import co.devkh.onlinestore.reviewonlinestore.api.order.OrderItems;

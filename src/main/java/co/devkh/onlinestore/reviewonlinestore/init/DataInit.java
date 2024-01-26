@@ -1,15 +1,12 @@
 package co.devkh.onlinestore.reviewonlinestore.init;
 
-import co.devkh.onlinestore.reviewonlinestore.api.brand.Brand;
-import co.devkh.onlinestore.reviewonlinestore.api.brand.BrandRepository;
+import co.devkh.onlinestore.reviewonlinestore.api.brand.data.Brand;
+import co.devkh.onlinestore.reviewonlinestore.api.brand.data.BrandRepository;
 import co.devkh.onlinestore.reviewonlinestore.api.product.data.Category;
 import co.devkh.onlinestore.reviewonlinestore.api.product.data.CategoryRepository;
 import co.devkh.onlinestore.reviewonlinestore.api.supplier.Supplier;
 import co.devkh.onlinestore.reviewonlinestore.api.supplier.SupplierRepository;
-import co.devkh.onlinestore.reviewonlinestore.api.user.data.Authority;
-import co.devkh.onlinestore.reviewonlinestore.api.user.data.AuthorityRepository;
-import co.devkh.onlinestore.reviewonlinestore.api.user.data.Role;
-import co.devkh.onlinestore.reviewonlinestore.api.user.data.RoleRepository;
+import co.devkh.onlinestore.reviewonlinestore.api.user.data.*;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -19,7 +16,7 @@ import java.util.*;
 
 @Component
 @RequiredArgsConstructor
-public class DataInit {
+public class DataInit{
     private final RoleRepository roleRepository;
     private final AuthorityRepository authorityRepository;
     private final CategoryRepository categoryRepository;
@@ -48,12 +45,19 @@ public class DataInit {
         authorityRepository.saveAll(userAuthorities);
 
         // Role-Authorities-Management
-
+        Authority readRole = Authority.builder().name("role:read").build();
+        Authority writeRole = Authority.builder().name("role:write").build();
+        Authority deleteRole = Authority.builder().name("role:delete").build();
+        Authority updateRole = Authority.builder().name("role:update").build();
+        Authority patchRole = Authority.builder().name("role:patch").build();
+        Set<Authority> roleAuthorities = Set.of(readRole,writeRole,deleteRole,updateRole,patchRole);
+        authorityRepository.saveAll(roleAuthorities);
 
         // Combine Authorities (Staff + User)
         Set<Authority> fullAuthorities = new HashSet<>(){{
             addAll(productAuthorities);
             addAll(userAuthorities);
+            addAll(roleAuthorities);
         }};
 
 
