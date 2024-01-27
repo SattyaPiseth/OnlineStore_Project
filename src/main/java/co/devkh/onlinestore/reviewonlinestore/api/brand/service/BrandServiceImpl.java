@@ -6,7 +6,6 @@ import co.devkh.onlinestore.reviewonlinestore.api.brand.data.BrandRepository;
 import co.devkh.onlinestore.reviewonlinestore.api.brand.projection.BrandInfo;
 import co.devkh.onlinestore.reviewonlinestore.api.brand.web.BrandDto;
 import co.devkh.onlinestore.reviewonlinestore.api.brand.web.NewBrandDto;
-import co.devkh.onlinestore.reviewonlinestore.api.brand.web.PagingBrandDto;
 import co.devkh.onlinestore.reviewonlinestore.api.brand.web.UpdateBrandToCategoryDto;
 import co.devkh.onlinestore.reviewonlinestore.api.product.data.Category;
 import co.devkh.onlinestore.reviewonlinestore.api.product.data.CategoryRepository;
@@ -16,7 +15,6 @@ import co.devkh.onlinestore.reviewonlinestore.base.service.BaseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -75,23 +73,14 @@ public class BrandServiceImpl extends BaseService implements BrandService{
         );
     }
 
-//    @Override
-//    public BrandDto findByName(String name) {
-//        Brand brand = brandRepository.findByBrandNameContainingIgnoreCase(name).orElseThrow(
-//                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-//                        String.format("Brand Name = %s doesn't exist in db!",name))
-//        );
-//        return brandMapper.toBrandDto(brand);
-//    }
-//
-//    @Override
-//    public BrandDto findByUuid(String uuid) {
-//        Brand brand = brandRepository.findByBrandUuid(uuid).orElseThrow(() ->
-//                new ResponseStatusException(HttpStatus.NOT_FOUND,
-//                        String.format("Brand UUID = %s doesn't exist in db!",uuid)));
-//
-//        return brandMapper.toBrandDto(brand);
-//    }
+    @Override
+    public BrandDto findByUuid(String uuid) {
+        Brand brand = brandRepository.findByBrandUuid(uuid).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        String.format("Brand UUID = %s doesn't exist in db!",uuid)));
+
+        return brandMapper.toBrandDto(brand);
+    }
 
     @Transactional
     @Override

@@ -1,6 +1,7 @@
 package co.devkh.onlinestore.reviewonlinestore.base.response;
 
 import co.devkh.onlinestore.reviewonlinestore.base.constant.MessageConstant;
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 

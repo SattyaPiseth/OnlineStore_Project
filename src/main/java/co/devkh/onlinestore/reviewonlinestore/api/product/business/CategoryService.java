@@ -3,10 +3,6 @@ package co.devkh.onlinestore.reviewonlinestore.api.product.business;
 import co.devkh.onlinestore.reviewonlinestore.api.product.dto.CategoryDto;
 import co.devkh.onlinestore.reviewonlinestore.base.request.BaseListingRQ;
 import co.devkh.onlinestore.reviewonlinestore.base.response.StructureRS;
-import org.hibernate.dialect.StructJdbcType;
-import org.springframework.data.domain.Page;
-
-import java.util.Map;
 
 public interface CategoryService {
     /**
@@ -15,21 +11,6 @@ public interface CategoryService {
      * @param categoryDto is the request data from client
      */
     void createNew(CategoryDto categoryDto);
-
-    /**
-     * This method is used to retrieve resource category from database
-     *
-     * @return List<CategoryDto>
-     */
-//    Page<CategoryDto> findAll(Map<String,String> params, int page, int size);
-
-    /**
-     * This method is used to retrieve resource category by name
-     * from database
-     * @param name of category
-     * @return CategoryDto
-     */
-//    CategoryDto findByName(String name);
 
     /**
      * This method is used to delete category from database by uuid
@@ -59,6 +40,11 @@ public interface CategoryService {
      */
     void updateById(Integer id,CategoryDto updateCategoryDto);
 
-
+    /**
+     * This method is used to get all category from database
+     * @param request is the request data from client
+     *
+     * @return StructureRS
+     */
     StructureRS getAll(BaseListingRQ request);
 }

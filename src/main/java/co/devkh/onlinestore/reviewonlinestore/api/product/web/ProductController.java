@@ -29,13 +29,11 @@ public class ProductController extends BaseController {
     public ResponseEntity<StructureRS> findAll(BaseListingRQ request){
         return response(productService.getAll(request));
     }
-
-
-//    @PreAuthorize("hasAuthority('SCOPE_product:read')")
-//    @GetMapping("/{uuid}")
-//    public ResponseEntity<StructureRS> findByUuid(@PathVariable String uuid){
-//        return response(productService.findByUuid(uuid));
-//    }
+    @PreAuthorize("hasAuthority('SCOPE_product:read')")
+    @GetMapping("/{uuid}")
+    public ResponseEntity<StructureRS> findByUuid(@PathVariable String uuid,BaseListingRQ request){
+        return response(productService.findByUuid(uuid,request));
+    }
 
     @PreAuthorize("hasAuthority('SCOPE_product:patch')")
     @ResponseStatus(HttpStatus.OK)

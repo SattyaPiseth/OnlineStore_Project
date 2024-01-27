@@ -1,6 +1,7 @@
 package co.devkh.onlinestore.reviewonlinestore.api.product.business;
 
 import co.devkh.onlinestore.reviewonlinestore.api.brand.data.Brand;
+import co.devkh.onlinestore.reviewonlinestore.api.product.dto.ProductDto;
 import co.devkh.onlinestore.reviewonlinestore.api.product.mapper.ProductMapper;
 import co.devkh.onlinestore.reviewonlinestore.api.product.data.Category;
 import co.devkh.onlinestore.reviewonlinestore.api.product.data.Product;
@@ -85,12 +86,20 @@ public class ProductServiceImpl extends BaseService implements ProductService{
         );
         productRepository.delete(product);
     }
-//
-//    @Override
-//    public ProductDto findByUuid(String uuid) {
-//       return productMapper.toProductDto(productRepository.findByUuid(uuid).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-//               String.format("Product UUID = %s doesn't exist in db!",uuid))));
-//    }
+
+    @Override
+    public StructureRS findByUuid(String uuid,BaseListingRQ request) {
+       Page<ProductDto> productDtoPage = productRepository.findByUuidContains(uuid,request.getPageable(request.getSort(),request.getOrder()))
+               .map(productMapper::toProductDto);
+
+       // handle exception
+         if (productDtoPage.isEmpty()){
+              throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                     String.format("Product UUID = %s doesn't exist in db!",uuid));
+         }
+
+       return response(productDtoPage.getContent(),productDtoPage);
+    }
 
     @Override
     public StructureRS getAll(BaseListingRQ request) {

@@ -28,41 +28,6 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
         Category category = categoryMapper.fromCategoryDto(categoryDto);
         categoryRepository.save(category);
     }
-
-//    @Override
-//    public Page<CategoryDto> findAll(Map<String,String> params, int page, int size) {
-////        List<Category> categories = categoryRepository.findAll();
-////        categoryMapper.toCategoryDtoList(categories);
-////        return categoryMapper.toCategoryDtoList(categories);
-//        CategoryFilter categoryFilter = new CategoryFilter();
-//        if (params.containsKey("name")){
-//            categoryFilter.setName(params.get("name"));
-//        }
-//        if (params.containsKey("id")){
-//            categoryFilter.setId(Integer.parseInt(params.get("id")));
-//            try{
-//                categoryFilter.setId(Integer.parseInt(params.get("id")));
-//            }catch (NumberFormatException e){
-//                throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE,
-//                        String.format("Category ID = %s is not number",params.get("id")));
-//            }
-//        }
-//
-//        // TODO : Add paging and sorting
-//        CategorySpec categorySpec = new CategorySpec(categoryFilter);
-//        Pageable pageable = PageUtil.getPageable(page,size);
-//        Page<Category> pageCategory = categoryRepository.findAll(categorySpec,pageable);
-//        return pageCategory.map(categoryMapper::toCategoryDto);
-//    }
-
-
-//    @Override
-//    public CategoryDto findByName(String name) {
-//        Category category = categoryRepository.findByNameContainingIgnoreCase(name).orElseThrow();
-//        return categoryMapper.toCategoryDto(category);
-//    }
-
-
     @Transactional
     @Override
     public void deleteByName(String name) {

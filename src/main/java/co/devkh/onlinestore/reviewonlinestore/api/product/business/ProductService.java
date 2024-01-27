@@ -7,6 +7,14 @@ import co.devkh.onlinestore.reviewonlinestore.base.response.StructureRS;
 
 public interface ProductService {
     /**
+     * This method is used to find product by uuid
+     *
+     * @param uuid of product
+     * @return ProductDto
+     */
+    StructureRS findByUuid(String uuid,BaseListingRQ request);
+
+    /**
      * This method is used to create a new product
      * resource into database
      * @param createProductDto is the request data from client
@@ -27,20 +35,10 @@ public interface ProductService {
     void deleteByUuid(String uuid);
 
     /**
-     * This method is used to retrieve resource product from database
-     *
-     * @return List<ProductDto>
+     * This method is used to get all product from database
+     * @param request is the request data from client
+     * @return StructureRS
      */
-//    Page<ProductDto> findAll(Map<String,String> params, int page, int size);
-
-//    /**
-//     * This method is used to retrieve resource product by uuid
-//     * from database
-//     * @param uuid of product
-//     * @return ProductDto
-//     */
-//    ProductDto findByUuid(String uuid);
-
     StructureRS getAll(BaseListingRQ request);
 
 }

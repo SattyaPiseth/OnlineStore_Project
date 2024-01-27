@@ -1,10 +1,9 @@
 package co.devkh.onlinestore.reviewonlinestore.api.user.service;
 
 import co.devkh.onlinestore.reviewonlinestore.api.user.web.role_dto.NewRoleDto;
-import co.devkh.onlinestore.reviewonlinestore.api.user.web.role_dto.RoleDto;
 import co.devkh.onlinestore.reviewonlinestore.api.user.web.user_dto.UpdateRoleToUserDto;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import co.devkh.onlinestore.reviewonlinestore.base.request.BaseListingRQ;
+import co.devkh.onlinestore.reviewonlinestore.base.response.StructureRS;
 
 
 public interface RoleService {
@@ -53,5 +52,6 @@ public interface RoleService {
      * Find all roles
      * @return the list of roles
      */
-    Page<RoleDto> findAllRoles(Pageable pageable);
+//    Page<RoleDto> findAllRoles(Pageable pageable);
+    StructureRS getAllRoles(BaseListingRQ request);
 }

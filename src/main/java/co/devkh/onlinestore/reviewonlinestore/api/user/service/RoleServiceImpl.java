@@ -5,13 +5,15 @@ import co.devkh.onlinestore.reviewonlinestore.api.user.data.RoleRepository;
 import co.devkh.onlinestore.reviewonlinestore.api.user.data.User;
 import co.devkh.onlinestore.reviewonlinestore.api.user.data.UserRepository;
 import co.devkh.onlinestore.reviewonlinestore.api.user.mapper.RoleMapper;
+import co.devkh.onlinestore.reviewonlinestore.api.user.projection.RoleInfo;
 import co.devkh.onlinestore.reviewonlinestore.api.user.web.role_dto.NewRoleDto;
-import co.devkh.onlinestore.reviewonlinestore.api.user.web.role_dto.RoleDto;
 import co.devkh.onlinestore.reviewonlinestore.api.user.web.user_dto.UpdateRoleToUserDto;
+import co.devkh.onlinestore.reviewonlinestore.base.request.BaseListingRQ;
+import co.devkh.onlinestore.reviewonlinestore.base.response.StructureRS;
+import co.devkh.onlinestore.reviewonlinestore.base.service.BaseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +25,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class RoleServiceImpl implements RoleService{
+public class RoleServiceImpl extends BaseService implements RoleService{
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final RoleMapper roleMapper;
@@ -154,9 +156,14 @@ public class RoleServiceImpl implements RoleService{
             log.info("Role updated to user successfully.");
     }
 
-
     @Override
-    public Page<RoleDto> findAllRoles(Pageable pageable) {
-        return roleRepository.findAll(pageable).map(roleMapper::toRoleDto);
+    public StructureRS getAllRoles(BaseListingRQ request) {
+        Page<RoleInfo> roleInfoPage = roleRepository.findByNameContainsAndAuthorities_NameContains(request.getQuery(),request.getPageable(request.getSort(),request.getOrder()));
+        return response(roleInfoPage.getContent(), roleInfoPage);
     }
+
+//    @Override
+//    public Page<RoleDto> findAllRoles(Pageable pageable) {
+//        return roleRepository.findAll(pageable).map(roleMapper::toRoleDto);
+//    }
 }

@@ -28,18 +28,11 @@ public class BrandController extends BaseController {
     public ResponseEntity<StructureRS> findAll(BaseListingRQ request){
         return response(brandService.findAll(request));
     }
-//    @PreAuthorize("hasAuthority('SCOPE_product:read')")
-//    @GetMapping("/{uuid}")
-//    public ResponseEntity<StructureRS> findByUuid(@PathVariable String uuid){
-//        return response(brandService.findByUuid(uuid));
-//    }
-//    @PreAuthorize("hasAuthority('SCOPE_product:read')")
-//    @GetMapping("/find/{brandName}")
-//    public ResponseEntity<StructureRS> findByName(@PathVariable String brandName){
-////        return brandService.findByName(brandName);
-//        return response(brandService.findByName(brandName));
-//    }
-
+    @PreAuthorize("hasAuthority('SCOPE_product:read')")
+    @GetMapping("/{uuid}")
+    public ResponseEntity<StructureRS> findByUuid(@PathVariable String uuid){
+        return response(brandService.findByUuid(uuid));
+    }
     @PreAuthorize("hasAuthority('SCOPE_product:update')")
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{uuid}")

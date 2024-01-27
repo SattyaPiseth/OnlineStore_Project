@@ -1,5 +1,6 @@
 package co.devkh.onlinestore.reviewonlinestore.base.response;
 
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.domain.Page;
 

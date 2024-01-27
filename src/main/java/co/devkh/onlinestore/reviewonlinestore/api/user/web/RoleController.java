@@ -5,6 +5,7 @@ import co.devkh.onlinestore.reviewonlinestore.api.user.web.role_dto.NewRoleDto;
 import co.devkh.onlinestore.reviewonlinestore.api.user.web.role_dto.RoleDto;
 import co.devkh.onlinestore.reviewonlinestore.api.user.web.user_dto.UpdateRoleToUserDto;
 import co.devkh.onlinestore.reviewonlinestore.base.controller.BaseController;
+import co.devkh.onlinestore.reviewonlinestore.base.request.BaseListingRQ;
 import co.devkh.onlinestore.reviewonlinestore.base.response.StructureRS;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,10 +24,8 @@ public class RoleController extends BaseController {
     private final RoleService roleService;
     @PreAuthorize("hasAuthority('SCOPE_role:read')")
     @GetMapping
-    public ResponseEntity<StructureRS> findAllRoles(@RequestParam(value = "page", required = false) int page, @RequestParam int size){
-        var pageable = Pageable.ofSize(size).withPage(page);
-        Page<RoleDto> newRoleDtoPage = roleService.findAllRoles(pageable);
-        return response(newRoleDtoPage);
+    public ResponseEntity<StructureRS> findAllRoles(BaseListingRQ request){
+        return response(roleService.getAllRoles(request));
     }
     @PreAuthorize("hasAuthority('SCOPE_role:patch')")
     @ResponseStatus(HttpStatus.OK)

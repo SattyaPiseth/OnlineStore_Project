@@ -10,7 +10,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface BrandRepository extends JpaRepository<Brand,Integer>{
-    Optional<Brand> findByBrandNameContainingIgnoreCase(String name);
     Optional<Brand> findByBrandUuid(String uuid);
 
     boolean existsByBrandUuid(String uuid);

@@ -1,18 +1,13 @@
 package co.devkh.onlinestore.reviewonlinestore.api.user.service;
 
-import co.devkh.onlinestore.reviewonlinestore.api.user.web.authority_dto.AuthorityDto;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
-import java.util.Set;
+import co.devkh.onlinestore.reviewonlinestore.base.request.BaseListingRQ;
+import co.devkh.onlinestore.reviewonlinestore.base.response.StructureRS;
 
 public interface AuthorityService {
     /**
-     *  Find all authorities with pageable (select)
-     * @param pageable pageable
-     * @return  page of authority dto
+     * Get all authorities
+     * @return list of authorities
      */
-
-    Page<AuthorityDto> findAllAuthorities(Pageable pageable);
+    StructureRS getAllAuthorities(BaseListingRQ request);
 
 }

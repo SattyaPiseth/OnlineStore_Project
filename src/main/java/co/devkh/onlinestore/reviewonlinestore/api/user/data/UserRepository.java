@@ -42,6 +42,11 @@ public interface UserRepository extends JpaRepository<User,Long> {
     Optional<User> findByUsernameAndIsDeletedFalseAndIsVerifiedTrue(String username);
 
     boolean existsByUsernameOrEmailAndIsDeletedFalse(String username, String email);
-    @Query("SELECT u FROM User u INNER JOIN u.roles roles WHERE (:query = 'ALL' OR LOWER(u.uuid) LIKE %:query% OR LOWER(u.username) LIKE %:query% OR LOWER(u.email) LIKE %:query% or lower(roles.name) LIKE %:query%) and u.isVerified = true and u.isDeleted = false")
-    Page<UserInfo> findByUuidStartsWithAndUsernameContainsAndEmailContainsAndRoles_NameContains(@Param("query") String query, Pageable pageable);
+
+@Query("""
+        select u from User u inner join u.roles roles
+        where(:query = 'ALL' or lower(u.uuid) like concat('%',lower(:query),'%') or lower(u.username) like concat('%', lower(:query), '%') or 
+        lower(u.email) like concat('%',lower(:query), '%') or lower(roles.name) like concat('%', lower(:query), '%')) and u.isVerified = true  
+        and u.isDeleted = false """)
+Page<UserInfo> findByUuidStartsWithAndUsernameContainsAndEmailContainsAndRoles_NameContains(@Param("query") String query, Pageable pageable);
 }
