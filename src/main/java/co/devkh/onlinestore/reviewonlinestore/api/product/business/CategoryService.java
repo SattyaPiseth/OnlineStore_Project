@@ -12,29 +12,29 @@ public interface CategoryService {
      */
     void createNew(CategoryDto categoryDto);
 
+/** This method is used to find category by id
+ *
+ * @param id of category
+ * @return StructureRS
+ */
+    StructureRS findById(Integer id, BaseListingRQ request);
+
+
     /**
-     * This method is used to delete category from database by uuid
-     * @param Id is identifier of category
+     * This method is used to delete category from database by name (not recommended)
+     * @param name is identifier name of category (permanently delete)
      *
-     * @return CategoryDto
-     */
-    CategoryDto findById(Integer Id);
-
-
-    /**
-     * This method is used to delete category from database by uuid
-     * @param name is identifier name of category
      */
     void deleteByName(String name);
 
     /**
-     * This method is used to delete category from database by uuid
-     * @param Id is identifier of category
+     * This method is used to delete category from database by id (not recommended)
+     * @param Id is identifier of category (permanently delete)
      */
     void deleteById(Integer Id);
 
     /**
-     * This method is used to update category from database by uuid
+     * This method is used to update category from database by id
      * @param id is identifier of category
      * @param updateCategoryDto is the request data from client
      */

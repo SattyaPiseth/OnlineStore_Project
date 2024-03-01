@@ -9,7 +9,7 @@ import co.devkh.onlinestore.reviewonlinestore.api.product.data.ProductRepository
 import co.devkh.onlinestore.reviewonlinestore.api.product.dto.UpdateProductDto;
 import co.devkh.onlinestore.reviewonlinestore.api.product.dto.CreateProductDto;
 import co.devkh.onlinestore.reviewonlinestore.api.product.projection.ProductInfo;
-import co.devkh.onlinestore.reviewonlinestore.api.supplier.Supplier;
+import co.devkh.onlinestore.reviewonlinestore.api.supplier.data.Supplier;
 import co.devkh.onlinestore.reviewonlinestore.base.request.BaseListingRQ;
 import co.devkh.onlinestore.reviewonlinestore.base.response.StructureRS;
 import co.devkh.onlinestore.reviewonlinestore.base.service.BaseService;
@@ -89,7 +89,7 @@ public class ProductServiceImpl extends BaseService implements ProductService{
 
     @Override
     public StructureRS findByUuid(String uuid,BaseListingRQ request) {
-       Page<ProductDto> productDtoPage = productRepository.findByUuidContains(uuid,request.getPageable(request.getSort(),request.getOrder()))
+       Page<ProductDto> productDtoPage = productRepository.findByUuidStartsWith(uuid,request.getPageable(request.getSort(),request.getOrder()))
                .map(productMapper::toProductDto);
 
        // handle exception

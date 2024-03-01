@@ -5,8 +5,9 @@ import co.devkh.onlinestore.reviewonlinestore.base.response.StructureRS;
 
 public interface AuthorityService {
     /**
-     * Get all authorities
-     * @return list of authorities
+     * Get all authorities  in system by paging and sorting with search
+     * @param request {@link BaseListingRQ}
+     * @return {@link StructureRS}
      */
     StructureRS getAllAuthorities(BaseListingRQ request);
 

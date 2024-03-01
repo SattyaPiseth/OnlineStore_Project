@@ -19,4 +19,7 @@ public interface BrandRepository extends JpaRepository<Brand,Integer>{
     @Query("select b from Brand b where ?1 = 'ALL' or lower(b.brandUuid) like concat('%',lower(?1),'%') or lower(b.brandName) like concat('%', lower(?1),'%' )")
     Page<BrandInfo> findByBrandUuidStartsWithAndBrandNameStartsWith(@Param("query") String query, Pageable pageable);
 
+    @Query("select b from Brand b where b.brandUuid like concat(:brandUuid, '%')")
+    Page<BrandInfo> findByBrandUuidStartsWith(@Param("brandUuid") String brandUuid, Pageable pageable);
+
 }

@@ -4,8 +4,8 @@ import co.devkh.onlinestore.reviewonlinestore.api.brand.data.Brand;
 import co.devkh.onlinestore.reviewonlinestore.api.brand.data.BrandRepository;
 import co.devkh.onlinestore.reviewonlinestore.api.product.data.Category;
 import co.devkh.onlinestore.reviewonlinestore.api.product.data.CategoryRepository;
-import co.devkh.onlinestore.reviewonlinestore.api.supplier.Supplier;
-import co.devkh.onlinestore.reviewonlinestore.api.supplier.SupplierRepository;
+import co.devkh.onlinestore.reviewonlinestore.api.supplier.data.Supplier;
+import co.devkh.onlinestore.reviewonlinestore.api.supplier.data.SupplierRepository;
 import co.devkh.onlinestore.reviewonlinestore.api.user.data.*;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -283,6 +283,7 @@ public class DataInit{
                     add(peripherals);
                     add(accessories);
                 }})
+
                 .build();
         Set<Supplier> asusSupplier = Set.of(asusMetaData);
 

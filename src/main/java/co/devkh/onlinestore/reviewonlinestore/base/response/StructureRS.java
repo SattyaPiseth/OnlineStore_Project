@@ -4,6 +4,7 @@ import co.devkh.onlinestore.reviewonlinestore.base.constant.MessageConstant;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 @Data
 public class StructureRS {
@@ -38,4 +39,5 @@ public class StructureRS {
     public StructureRS() {
 
     }
+
 }

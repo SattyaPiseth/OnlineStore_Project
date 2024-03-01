@@ -49,9 +49,9 @@ public interface RoleService {
     void updateRoleToUser(String uuid, UpdateRoleToUserDto updateRoleToUserDto);
 
     /**
-     * Find all roles
-     * @return the list of roles
+     * Get all roles with pagination and filter options
+     * @param request the request data
+     * @return the response data with pagination and filter options
      */
-//    Page<RoleDto> findAllRoles(Pageable pageable);
     StructureRS getAllRoles(BaseListingRQ request);
 }

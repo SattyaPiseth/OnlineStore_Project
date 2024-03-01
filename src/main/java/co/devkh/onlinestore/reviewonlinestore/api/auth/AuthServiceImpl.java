@@ -119,9 +119,9 @@ public class AuthServiceImpl implements AuthService {
 //        mailService.sendMail(verificationCodeMail);
 
         // Second email with verification link
-//        Mail<String> verificationLinkMail = createVerificationEmail(
-//                newUserDto.email(), verificationLink, "auth/verify-token-mail");
-//        mailService.sendMail(verificationLinkMail);
+        Mail<String> verificationLinkMail = createVerificationEmail(
+                newUserDto.email(), verificationLink, "auth/verify-token-mail");
+        mailService.sendMail(verificationLinkMail);
 
         return verificationLink;
     }
@@ -261,6 +261,7 @@ public class AuthServiceImpl implements AuthService {
     @Transactional
     @Override
     public ResponseEntity<Object> changePassword(ChangePasswordDto changePasswordDto) {
+
 
         // Find the user with the matching email
         User user = authRepository.findByEmailAndIsDeletedFalse(changePasswordDto.email())

@@ -1,5 +1,6 @@
 package co.devkh.onlinestore.reviewonlinestore.api.product.data;
 
+import co.devkh.onlinestore.reviewonlinestore.api.product.dto.CategoryDto;
 import co.devkh.onlinestore.reviewonlinestore.api.product.projection.CategoryInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,4 +24,7 @@ public interface CategoryRepository extends JpaRepository<Category,Integer>, Jpa
     @Query("select c from Category c where :query = 'ALL' or lower(c.name) like concat('%', lower(:query), '%') or " +
             "lower(c.description) like concat('%', lower(:query), '%')")
     Page<CategoryInfo> findByNameStartsWithAndDescriptionLike(@Param("query") String query, Pageable pageable);
+
+    @Query("select c from Category c where c.id = :id")
+    Page<CategoryInfo> selectById(@Param("id")Integer id, Pageable pageable);
 }

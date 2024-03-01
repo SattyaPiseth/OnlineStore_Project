@@ -45,8 +45,8 @@ public interface UserService {
     UserDto findUserByUuid(String uuid);
 
     /**
-     * This method is used to delete user from database by uuid
-     * @param uuid of User
+     * This method is used to delete user from database by uuid (not recommended)
+     * @param uuid for delete a user(Permanently)
      */
     // delete a user by UUID (Permanently)
     void deleteByUuid(String uuid);
@@ -62,7 +62,19 @@ public interface UserService {
     // Update status : 'is_deleted' by UUID
     void updateIsDeletedByUuid(String uuid, Boolean isDeleted);
 
+    /**
+     * This method is used to retrieve all users
+     * from database
+     * @param request is the request data from client for pagination and filter
+     * @return StructureRS
+     */
     StructureRS findAllUsers(BaseListingRQ request);
 
+    /**
+     * This method is used to retrieve user by username
+     * from database
+     * @param username of User
+     * @return CustomUserDetails
+     */
     Optional<CustomUserDetails> findUserByUsername(String username);
 }

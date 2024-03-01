@@ -2,15 +2,12 @@ package co.devkh.onlinestore.reviewonlinestore.api.user.web;
 
 import co.devkh.onlinestore.reviewonlinestore.api.user.service.RoleService;
 import co.devkh.onlinestore.reviewonlinestore.api.user.web.role_dto.NewRoleDto;
-import co.devkh.onlinestore.reviewonlinestore.api.user.web.role_dto.RoleDto;
 import co.devkh.onlinestore.reviewonlinestore.api.user.web.user_dto.UpdateRoleToUserDto;
 import co.devkh.onlinestore.reviewonlinestore.base.controller.BaseController;
 import co.devkh.onlinestore.reviewonlinestore.base.request.BaseListingRQ;
 import co.devkh.onlinestore.reviewonlinestore.base.response.StructureRS;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

@@ -8,28 +8,29 @@ import co.devkh.onlinestore.reviewonlinestore.base.response.StructureRS;
 
 
 public interface BrandService {
-    /**
-     * This method is used to create a new brand
-     * resource into database
+/**
+     * This method is used to create new brand
      * @param newBrandDto is the request data from client
      */
     void createNew(NewBrandDto newBrandDto);
 
     /**
-     * This method is used to retrieve resource brand from database
+     * This method is used to retrieve all brand from database
+     * @param request is the request data from client
      * @return StructureRS
      */
     StructureRS findAll(BaseListingRQ request);
 
     /**
-     * This method is used to retrieve resource brand by id
-     * @param uuid of brand
-     * @return BrandDto
+     * This method is used to retrieve brand from database by uuid
+     * @param uuid is identifier of brand
+     * @param request is the request data from client
+     * @return StructureRS
      */
-    BrandDto findByUuid(String uuid);
+    StructureRS findByUuid(String uuid, BaseListingRQ request);
 
     /**
-     * This method is used to update brand from database by id
+     * This method is used to update brand by uuid
      * @param uuid is identifier of brand
      * @param updateBrandDto is the request data from client
      */

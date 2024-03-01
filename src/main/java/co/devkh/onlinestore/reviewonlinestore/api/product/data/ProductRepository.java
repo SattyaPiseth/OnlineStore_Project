@@ -16,11 +16,12 @@ public interface ProductRepository extends JpaRepository<Product,Long>, JpaSpeci
     Optional<Product> findByUuid(String uuid);
 
     @Query("select p from Product p where :query = 'ALL' or lower(p.code) like concat('%', lower(:query), '%') or " +
-                "lower(p.name) like concat('%', lower(:query), '%') or lower(p.uuid) like concat('%', lower(:query), '%') ")
+                "lower(p.name) like concat('%', lower(:query), '%') or lower(p.uuid) like concat('%', lower(:query), '%')")
     Page<ProductInfo> findByNameStartsWithAndDescriptionStartsWith(@Param("query") String query, Pageable pageable);
 
-    @Query("select p from Product p where p.uuid like concat('%', :uuid, '%')")
-    Page<Product> findByUuidContains(@Param("uuid") String uuid, Pageable pageable);
+
+    @Query("select p from Product p where p.uuid like concat(:uuid, '%')")
+    Page<Product> findByUuidStartsWith(@Param("uuid") String uuid, Pageable pageable);
 
 
 }

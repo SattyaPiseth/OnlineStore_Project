@@ -11,7 +11,7 @@ public interface BrandMapper {
 
     Brand fromNewBrandDto(NewBrandDto newBrandDto);
 
-    BrandDto toBrandDto(Brand brand);
+//    BrandDto toBrandDto(Brand brand);
 
     void fromBrandDto(@MappingTarget Brand brand, BrandDto updateBrandDto);
 }

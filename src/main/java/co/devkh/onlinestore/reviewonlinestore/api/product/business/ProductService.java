@@ -10,7 +10,7 @@ public interface ProductService {
      * This method is used to find product by uuid
      *
      * @param uuid of product
-     * @return ProductDto
+     * @return StructureRS
      */
     StructureRS findByUuid(String uuid,BaseListingRQ request);
 
@@ -30,7 +30,7 @@ public interface ProductService {
 
     /**
      * This method is used to delete product from database by uuid
-     * @param uuid of product
+     * @param uuid of product to delete (not soft delete)
      */
     void deleteByUuid(String uuid);
 

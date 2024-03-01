@@ -77,8 +77,8 @@ public class UserServiceImpl extends BaseService implements UserService{
         if (isNotFound){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Role ID does not exist..!");
         }
-
-       Set<Role> roles = newUserDto.roleIds().stream()
+// Tacitly, we assume that the role IDs are valid.
+        Set<Role> roles = newUserDto.roleIds().stream()
                 .map(roleId->Role.builder().id(roleId).build())
                 .collect(Collectors.toSet());
 

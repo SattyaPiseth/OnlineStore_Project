@@ -5,7 +5,7 @@ import co.devkh.onlinestore.reviewonlinestore.api.cart.Cart;
 import co.devkh.onlinestore.reviewonlinestore.api.inventory.Inventory;
 import co.devkh.onlinestore.reviewonlinestore.api.order.OrderItems;
 import co.devkh.onlinestore.reviewonlinestore.api.shipment.ShipmentDetail;
-import co.devkh.onlinestore.reviewonlinestore.api.supplier.Supplier;
+import co.devkh.onlinestore.reviewonlinestore.api.supplier.data.Supplier;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

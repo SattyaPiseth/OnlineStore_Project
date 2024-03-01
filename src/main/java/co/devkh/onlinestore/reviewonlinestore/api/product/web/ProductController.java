@@ -51,18 +51,4 @@ public class ProductController extends BaseController {
         productService.deleteByUuid(uuid);
     }
 
-    /**
-     *  Search products by name, category, etc. (GET) api endpoint
-     *  with pagination and sorting support (Pageable) and search term
-     */
-//    @PreAuthorize("hasAuthority('SCOPE_product:read')")
-//    @GetMapping("/search")
-//    public ResponseEntity<StructureRS> searchProducts(@RequestParam (defaultValue = "",required = false)String searchTerm,
-//                                                      @RequestParam int page, @RequestParam int size){
-//
-//        var pageable = Pageable.ofSize(size).withPage(page);
-////        return productService.searchProducts(searchTerm,pageable);
-//        Page<ProductDto> productDtoPage = productService.searchProducts(searchTerm,pageable);
-//        return response(productDtoPage);
-//    }
 }

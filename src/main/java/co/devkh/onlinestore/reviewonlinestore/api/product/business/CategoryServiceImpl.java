@@ -28,6 +28,20 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
         Category category = categoryMapper.fromCategoryDto(categoryDto);
         categoryRepository.save(category);
     }
+
+    @Override
+    public StructureRS findById(Integer id, BaseListingRQ request) {
+        Page<CategoryInfo> categoryInfoPage = categoryRepository.selectById(id, request.getPageable(request.getSort(), request.getOrder()));
+        if (categoryInfoPage.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    String.format("Category Id = %d doesn't exist in db!",id));
+        }
+        return response(
+                categoryInfoPage.getContent(),
+                categoryInfoPage
+        );
+    }
+
     @Transactional
     @Override
     public void deleteByName(String name) {
@@ -51,14 +65,6 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
         }
     }
 
-    @Override
-    public CategoryDto findById(Integer id) {
-        Category category = categoryRepository.findCategoryById(id).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        String.format("Category Id = %d doesn't exist in db!",id))
-        );
-        return categoryMapper.toCategoryDto(category);
-    }
     @Transactional
     @Override
     public void updateById(Integer id, CategoryDto updateCategoryDto) {

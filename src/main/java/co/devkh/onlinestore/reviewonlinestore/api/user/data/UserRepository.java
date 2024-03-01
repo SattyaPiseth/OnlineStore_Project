@@ -29,8 +29,8 @@ public interface UserRepository extends JpaRepository<User,Long> {
     // Boolean existsByUuid(String uuid) // Derived Query Method
 //    @Query("SELECT EXISTS (SELECT u FROM User AS u WHERE u.uuid = ?1) ")
     @Query("SELECT COUNT(u) > 0 FROM User u WHERE u.uuid = ?1")
-
     Boolean checkUserByUuid(String uuid);
+
     @Modifying
     @Query("UPDATE User AS u SET u.isDeleted = :isDeleted WHERE u.uuid = :uuid")
     void updateIsDeletedStatusByUuid(@Param("uuid") String uuid,@Param("isDeleted") Boolean isDeleted);

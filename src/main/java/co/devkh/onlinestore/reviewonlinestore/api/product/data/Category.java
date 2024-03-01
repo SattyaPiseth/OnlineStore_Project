@@ -1,10 +1,11 @@
 package co.devkh.onlinestore.reviewonlinestore.api.product.data;
 
 import co.devkh.onlinestore.reviewonlinestore.api.brand.data.Brand;
-import co.devkh.onlinestore.reviewonlinestore.api.supplier.Supplier;
+import co.devkh.onlinestore.reviewonlinestore.api.supplier.data.Supplier;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter

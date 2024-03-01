@@ -1,6 +1,7 @@
 package co.devkh.onlinestore.reviewonlinestore.api.product.projection;
 
 import co.devkh.onlinestore.reviewonlinestore.api.brand.data.Brand;
+import co.devkh.onlinestore.reviewonlinestore.api.supplier.data.Supplier;
 
 /**
  * Projection for {@link co.devkh.onlinestore.reviewonlinestore.api.product.data.Product}
@@ -39,7 +40,7 @@ public interface ProductInfo {
     }
 
     /**
-     * Projection for {@link co.devkh.onlinestore.reviewonlinestore.api.supplier.Supplier}
+     * Projection for {@link Supplier}
      */
     interface SupplierInfo {
         String getCompanyName();

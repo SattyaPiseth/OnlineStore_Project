@@ -74,12 +74,17 @@ public class BrandServiceImpl extends BaseService implements BrandService{
     }
 
     @Override
-    public BrandDto findByUuid(String uuid) {
-        Brand brand = brandRepository.findByBrandUuid(uuid).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        String.format("Brand UUID = %s doesn't exist in db!",uuid)));
+    public StructureRS findByUuid(String uuid, BaseListingRQ request) {
+        Page<BrandInfo> brandInfoPage = brandRepository.findByBrandUuidStartsWith(uuid, request.getPageable(request.getSort(),request.getOrder()));
 
-        return brandMapper.toBrandDto(brand);
+        if (brandInfoPage.getContent().isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    String.format("Brand UUID = %s doesn't exist in db!",uuid));
+        }
+        return response(
+                brandInfoPage.getContent(),
+                brandInfoPage
+        );
     }
 
     @Transactional

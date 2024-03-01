@@ -30,8 +30,8 @@ public class BrandController extends BaseController {
     }
     @PreAuthorize("hasAuthority('SCOPE_product:read')")
     @GetMapping("/{uuid}")
-    public ResponseEntity<StructureRS> findByUuid(@PathVariable String uuid){
-        return response(brandService.findByUuid(uuid));
+    public ResponseEntity<StructureRS> findByUuid(@PathVariable String uuid,BaseListingRQ request){
+        return response(brandService.findByUuid(uuid,request));
     }
     @PreAuthorize("hasAuthority('SCOPE_product:update')")
     @ResponseStatus(HttpStatus.OK)
